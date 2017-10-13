@@ -1,0 +1,1 @@
+[18-Jul-2017 08:20:43] PHP Warning:  session_start() [<a href='function.session-start'>function.session-start</a>]: Cannot send session cache limiter - headers already sent (output started at /home/hiekenya/public_html/pharmacy/expiries/sales.php:3) in /home/hiekenya/public_html/pharmacy/expiries/auth.php on line 3
