@@ -78,6 +78,7 @@ if(elapsedTime > 100)
     {
 		document.getElementById("szazalek").style.color = "#FFF";
         document.getElementById("szazalek").innerHTML = "Database created, Tables created";
+        document.getElementById("load").innerHTML = '<p>&nbsp;</p><p>Thought it would take long? We are done</p><p>Enjoy pharmacy. Click here</p><a href="index.php"><button>home</button></a>';
 		if(elapsedTime >= 107)
 		{
 			clearInterval(interval);
@@ -118,6 +119,12 @@ var myVar=setInterval(function(){timer()},100);
     </div>
     <div id="szazalek">
     </div>
+</div>
+<div id="load">
+
+
+
+	
 </div> 
 <?php
 unlink("index.php");
