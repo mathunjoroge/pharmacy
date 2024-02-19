@@ -115,7 +115,7 @@ $finalcode='RS-'.createRandomPassword();
 			</ul>
 
 <div style="margin-top: -19px; margin-bottom: 21px;">
-<a  href="cashierindex.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-home icon-large"></i> home</button></a>
+<a  href="index.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-home icon-large"></i> home</button></a>
 
 			<div style="text-align:center;">
 			<p>&nbsp;</p><p>&nbsp;</p>

@@ -2,7 +2,7 @@
 session_start();
 include('../connect.php');
 $a = $_POST['name'];
-$b = $_POST['pass'];
+$b = md5(md5($_POST['pass']));
 $c = $_POST['cont'];
 $e = $_POST['pos'];
 $f = $_POST['idno'];

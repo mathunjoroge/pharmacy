@@ -1,0 +1,1 @@
+INSERT INTO `pharmacy_details` (`id`, `pharmacy_name`, `slogan`, `contact`, `email`, `location`) VALUES (NULL, 'VYEHU PHARMACY', 'HEALTH BY VYEHU', '0727008848', 'vyehupharma@gmail.com', 'car wash, opp Amita suppliers')

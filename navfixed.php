@@ -12,15 +12,7 @@
           <div class="nav-collapse collapse">
           
             <ul class="nav pull-right"></a><li></li>
-<li style="font-size:0.8em;"><a href="../index.php"><font color="white">HOME</font></a></li>
-            <li class="active" style="font-size:0.8em;"><a href="index.php"><font color="blue">PHARMACY</font></a></li>
-            <li  style="font-size:0.8em;"><a href="../hie/index.php"><font color="white">INFO EXCHANGE </font></a></li>
-            <li style="font-size:0.8em;"><a href="../drug/index.php"><font color="white">DRUG INDEX</font></a></li>
-            <li  style="font-size:0.8em;"><a href="../cancers/index.php"><font color="white">CANCER GUIDE</font></a></li>
-            <li style="font-size:0.8em;"><a href="../diseases/index.php"><font color="white">Rx GUIDE</font></a></li>
-            
-              
-      <body style="background-image: url(images/background.jpg);">							
+<body style="background-image: url(images/background.jpg);">							
 
 				</a></li>
               

@@ -1,133 +1,73 @@
-<?php
-// Connect to MySQL
-$link = mysql_connect('localhost', 'root', '');
-if (!$link) {
-    die('Could not connect: ' . mysql_error());
-}
-
-// Make my_db the current database
-$db_selected = mysql_select_db('pharmacy_db', $link);
-
-if (!$db_selected) {
-  // If we couldn't, then it either doesn't exist, or we can't see it.
-  $sql = 'CREATE DATABASE pharmacy_db';
-
-  if (mysql_query($sql, $link)) {
-      echo "";
-  } else {
-      echo 'Error creating database: ' . mysql_error() . "\n";
-  }
-}
-
-
-?>
-<?php
-
-// Name of the file
-$filename = 'pharmacy_db.sql';
-// MySQL host
-$mysql_host = 'localhost';
-// MySQL username
-$mysql_username = 'root';
-// MySQL password
-$mysql_password = '';
-// Database name
-$mysql_database = 'pharmacy_db';
-
-// Connect to MySQL server
-mysql_connect($mysql_host, $mysql_username, $mysql_password) or die('Error connecting to MySQL server: ' . mysql_error());
-// Select database
-mysql_select_db($mysql_database) or die('Error selecting MySQL database: ' . mysql_error());
-
-// Temporary variable, used to store current query
-$templine = '';
-// Read in entire file
-$lines = file($filename);
-// Loop through each line
-foreach ($lines as $line)
-{
-// Skip it if it's a comment
-if (substr($line, 0, 2) == '--' || $line == '')
-    continue;
-
-// Add this line to the current segment
-$templine .= $line;
-// If it has a semicolon at the end, it's the end of the query
-if (substr(trim($line), -1, 1) == ';')
-{
-    // Perform the query
-    mysql_query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . mysql_error() . '<br /><br />');
-    // Reset temp variable to empty
-    $templine = '';
-}
-}
-echo '</br>';
- 
- 
-?>
-<script type="text/javascript">function progressbar(percent){
-    //var szazalek=Math.round((meik*100)/ossz);
-    document.getElementById("szliderbar").style.width=percent+'%';
-    document.getElementById("szazalek").innerHTML=percent+'%';
-}
-
-var elapsedTime=0;
-function timer()
-{
-if(elapsedTime > 100)
-    {
-		document.getElementById("szazalek").style.color = "#FFF";
-        document.getElementById("szazalek").innerHTML = "Database created, Tables created";
-        document.getElementById("load").innerHTML = '<p>&nbsp;</p><p>Thought it would take long? We are done</p><p>Enjoy pharmacy. Click here</p><a href="index.php"><button>home</button></a>';
-		if(elapsedTime >= 107)
-		{
-			clearInterval(interval);
-			history.go(-1);
-		}
-    }
-	else
-	{
-		progressbar(elapsedTime);
-	}
-	elapsedTime++;
-    
-}
-
-var myVar=setInterval(function(){timer()},100);
-</script>
-<style type="text/css">#szlider{
-    width:100%;
-    height:15px;
-    border:1px solid #000;
-    overflow:hidden; }
-#szliderbar{
-    width:37%;
-    height:15px;
-    border-right: 1px solid #000000;
-    background: green; }
-#szazalek {
-    color: #000000;
-    font-size: 15px;
-    font-style: italic;
-    font-weight: bold;
-    left: 25px;
-    position: relative;
-    top: -16px; }</style>
-<body onload="drawszlider(121, 56);">
-    <div id="szlider">
-    <div id="szliderbar">
-    </div>
-    <div id="szazalek">
-    </div>
-</div>
-<div id="load">
-
-
-
+<?php 
+	//Start session
+	session_start();
 	
-</div> 
+	//Unset the variables stored in session
+	unset($_SESSION['SESS_MEMBER_ID']);
+	unset($_SESSION['SESS_FIRST_NAME']);
+	unset($_SESSION['SESS_LAST_NAME']);
+include('navfixed.php');
+?>
+<html>
+<head>
+<title>
+Login
+</title>
+    <link rel="shortcut icon" href="main/images/pos.jpg">
+
+  <link href="main/css/bootstrap.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="main/css/DT_bootstrap.css">
+  
+  <link rel="stylesheet" href="main/css/font-awesome.min.css">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="main/css/bootstrap-responsive.css" rel="stylesheet">
+
+<link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+		<div class="span4">
+		</div>
+	
+</div>
+<div id="login">
 <?php
-unlink("index.php");
-unlink("pharmacy_db.sql");
- rename("index2.php","index.php"); ?>  
+if( isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION['ERRMSG_ARR']) && count($_SESSION['ERRMSG_ARR']) >0 ) {
+	foreach($_SESSION['ERRMSG_ARR'] as $msg) {
+		echo '<div style="color: red; text-align: center;">',$msg,'</div><br>'; 
+	}
+	unset($_SESSION['ERRMSG_ARR']);
+}
+?>
+<form action="login.php" method="post">
+
+			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 15px #000; color:green;"><center>M&C Pharmacy</center></font>
+		<br>
+
+		
+<div class="input-prepend">
+		<span style="height:30px; width:25px;" class="add-on"><i class="icon-user icon-2x"></i></span><input style="height:40px;" type="text" name="username" Placeholder="Username" required/><br>
+</div>
+<div class="input-prepend">
+	<span style="height:30px; width:25px;" class="add-on"><i class="icon-lock icon-2x"></i></span><input type="password" style="height:40px;" name="password" Placeholder="Password" required/><br>
+		</div>
+		<div class="qwe">
+		 <button class="btn btn-large btn-primary btn-block pull-right" href="dashboard.html" type="submit"><i class="icon-signin icon-large"></i> Login</button>
+</div>
+		 </form>
+</div>
+</div>
+</div>
+</div>
 </body>
+</html>

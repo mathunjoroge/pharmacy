@@ -128,7 +128,7 @@ $finalcode='INV-'.createRandomPassword();
 			</ul>
 
 <div style="margin-top: -19px; margin-bottom: 21px;">
-<a  href="cashierindex.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-home icon-large"></i> home</button></a><a  href="incomplete.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-money icon-large"></i> incomplete transactions</button></a>
+<a  href="index.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-home icon-large"></i> home</button></a><a  href="incomplete.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-money icon-large"></i> incomplete transactions</button></a>
 
 
 </div>
