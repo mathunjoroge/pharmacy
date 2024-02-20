@@ -6,9 +6,14 @@ $b = $_POST['product'];
 $batch = $_POST['batch'];
 $c = $_POST['quantity'];
 $w = $_POST['pt'];
+if (empty($_POST['pc'])) {
+    $_POST['pc'] = 0;
+} else {
+    // $_POST['pc'] is already set and non-empty, no action needed
+}
 $disc = $_POST['pc'];
 $date = $_POST['date'];
-$asasa=$_POST['pr'] - ($_POST['pr'] * ($disc*0.01));
+$asasa=$_POST['pr'] - ($_POST['pr'] * ($disc));
 
 $result = $db->prepare("SELECT * FROM products WHERE product_id= :userid");
 $result->bindParam(':userid', $b);

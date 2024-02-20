@@ -24,7 +24,7 @@
 	
 <input type="hidden" name="memi" value="<?php echo $id; ?>" />
 <span> </span><input type="hidden" style="width:265px; height:30px;"  name="price" value="<?php echo $price; ?>" readonly/><br>
-<span> </span><input type="text" style="width:265px; height:30px;"  name="prod" value="<?php echo $row['product']; ?>" readonly/><br>
+<span> </span><input type="hidden" style="width:265px; height:30px;"  name="prod" value="<?php echo $row['product']; ?>" readonly/><br>
 <span>quantity </span><input type="text" style="width:265px; height:30px;"  name="qty" value="<?php echo $row['qty']; ?>" /><br>
 
 

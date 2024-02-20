@@ -1,3 +1,6 @@
+<?php
+ini_set("display_errors", "On");
+?>
 <body style="text-transform:capitalize;">
 <meta name="viewport" content="width=device-width, initial-scale=1">
  <div class="navbar navbar-inverse navbar-fixed-top">

@@ -88,7 +88,7 @@ if($position=='pharmacist') {
 <a href="customer.php"><i class="icon-group icon-2x"></i><br> customers</a>     
 <a href="supplier.php"><i class="icon-group icon-2x"></i><br> Suppliers</a>
 <a href="../purchases/sales.php?id=cash&invoice=<?php echo $finalcode ?>"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> Record Purchase</a> 
-<a href="../wholesale/sales.php?id=cash&invoice=<?php echo $finalcode ?>"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> wholesale</a><?php
+<a href="#"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> wholesale</a><?php
 $Today = date('m/d/y',time());
 $new = date('m/d/20y', strtotime($Today));
 ?>
@@ -106,7 +106,7 @@ if($position=='admin'){
 <a href="customer.php"><i class="icon-group icon-2x"></i><br> customers</a>     
 <a href="supplier.php"><i class="icon-group icon-2x"></i><br> Suppliers</a>  
 <a href="../purchases/sales.php?id=cash&invoice=<?php echo $finalcode ?>"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> Record Purchase</a> 
-<a href="../wholesale/sales.php?id=cash&invoice=<?php echo $finalcode ?>"><font ><i class="icon-shopping-cart icon-2x"></i></font><br>wholesale</a>
+<a href="#"><font ><i class="icon-shopping-cart icon-2x"></i></font><br>wholesale</a>
 <a href="setting.php"><font ><i class="icon-cogs icon-2x"></i></font><br> settings</a>
 <a href="inventory.php"><font ><i color="green" class="icon-desktop icon-2x"></i></font><br> inventory adjustments</a>
 <a href="admin.php"><font ><i class="icon-user icon-2x"></i></font><br> Admin</a>

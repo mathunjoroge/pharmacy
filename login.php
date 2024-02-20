@@ -16,25 +16,9 @@
 	//Sanitize the POST values
 	$login = strip_tags($_POST['username']);
 	$passworda =md5($_POST['password']);
-	$password =md5($passworda);
+	$password =md5(md5($_POST['password']));
 	//Input Validations
-	if($login == '') {
-		echo "Username missing";
-		
-	}
-	if($password == '') {
-		echo "password missing";
-	}
 	
-	//If there are input validations, redirect back to the login form
-	if($password == ''|| $login == '') {
-		$_SESSION['ERRMSG_ARR'] = $errmsg_arr;
-		session_write_close();
-		header("location: index.php");
-		exit();
-	}
-	
-	//Create query
 	$result = $db->prepare("SELECT * FROM user WHERE username='$login' AND password='$password'");
 				$result->execute();
 				$rowcount = $result->rowcount();

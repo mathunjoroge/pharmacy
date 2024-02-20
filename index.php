@@ -7,6 +7,7 @@
 	unset($_SESSION['SESS_FIRST_NAME']);
 	unset($_SESSION['SESS_LAST_NAME']);
 include('navfixed.php');
+include('connect.php');
 ?>
 <html>
 <head>
@@ -34,24 +35,22 @@ Login
 <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <div class="container"> <font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center><?php
+		
+	$result = $db->prepare("SELECT *  FROM pharmacy_details");
+	$result->execute();
+	for($i=0; $row = $result->fetch(); $i++){
+echo $row['pharmacy_name']; }
+?></center></font></div>
     <div class="container-fluid">
       <div class="row-fluid">
 		<div class="span4">
-		</div>
-	
-</div>
-<div id="login">
-<?php
-if( isset($_SESSION['ERRMSG_ARR']) && is_array($_SESSION['ERRMSG_ARR']) && count($_SESSION['ERRMSG_ARR']) >0 ) {
-	foreach($_SESSION['ERRMSG_ARR'] as $msg) {
-		echo '<div style="color: red; text-align: center;">',$msg,'</div><br>'; 
-	}
-	unset($_SESSION['ERRMSG_ARR']);
-}
-?>
+		    
+		</div><div id="login">
+
 <form action="login.php" method="post">
 
-			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 15px #000; color:green;"><center>M&C Pharmacy</center></font>
+				
 		<br>
 
 		
