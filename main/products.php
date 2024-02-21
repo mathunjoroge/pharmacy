@@ -187,8 +187,7 @@ window.onload=startclock;
 		<tr>
 			<th width="12%"> Brand Name </th>
 			<th width="14%"> Generic Name </th>
-			<th width="7%"> Supplier </th>
-			
+				
 			<th width="6%"> buying Price </th>
 			<th width="6%"> Mark up </th>
 			<th width="6%"> Selling Price </th>
@@ -244,8 +243,6 @@ else{
 
 			<td><?php echo $row['product_code']; ?></td>
 			<td><?php echo $row['gen_name']; ?></td>
-			
-					<td><?php echo $row['supplier']; ?></td>
 			
 			<td><?php
 			$oprice=$row['o_price'];
