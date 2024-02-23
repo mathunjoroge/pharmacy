@@ -286,33 +286,9 @@ if($position=='pharmacist') {
 	</tbody>
 </table>
 <?php
-
-			include('../connect.php');
-				$result = $db->prepare("SELECT * FROM products   ORDER BY product_id DESC");
-				$result->execute();
-				$rowcount123 = $result->rowcount();
-
-			
-//calculate total page number for the given table in the database 
-$total=ceil($rowcount123/$limit); ?>
-<ul >
-<?php if($id>1)
-{
-	//Go to previous page to show previous 10 items. If its in page 1 then it is inactive
-	echo "<button class='btn btn-primary'><a href='?id=".($id-1)."' class='button'>PREVIOUS</a></button>";
-}
+include "pagination.php";
 ?>
-
-<?php
-if($id!=$total)
-{
-	////Go to previous page to show next 10 items.
-	echo "<button class='btn btn-primary'><a href='?id=".($id+1)."' class='button'>NEXT</a></button>";
-}
-?>
-
-
-
+</ul>
 <div class="clearfix"></div>
 </div>
 </div>

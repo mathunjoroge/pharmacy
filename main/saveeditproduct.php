@@ -21,5 +21,11 @@ SET product_code=?, gen_name=?, product_name=?,  o_price=?, price=?,   level=?,m
 WHERE product_id=?";
 $q = $db->prepare($sql);
 $q->execute(array($a,$z,$a,$g,$price,$m,$k,$qty,$id));
+//updating batch number qty
+$sql = "UPDATE batch 
+SET quantity=?
+WHERE product_id=?";
+$q = $db->prepare($sql);
+$q->execute(array($qty,$id));
 header("location: products.php?");
 ?>

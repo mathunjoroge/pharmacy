@@ -18,7 +18,7 @@ for($i=0; $row = $result->fetch(); $i++){
 <span>mark up : </span></br>
 <input type="text" style="width:265px; height:30px;" id="resultInput"  name="markup" value="<?php echo $row['markup']; ?>" onkeyup="sum();" Required/><br>
 <span>quantity : </span></br>
-<input type="text" style="width:265px; height:30px;" id="resultInput"  name="qty" value="<?php echo $row['qty']; ?>"  Required/><br>
+<input type="text" style="width:265px; height:30px;"   name="qty" value="<?php echo $row['qty']; ?>"  Required/><br>
 <input type="hidden" style="width:265px; height:30px;" min="0" name="sold" value="<?php echo $row['instock']; ?>" /><br>
 <span>Re-order Level </span><input type="number" style="width:265px; height:30px;" min="0" name="level" value="<?php echo $row['level']; ?>" /><br>
 <span>category: </span><br>
@@ -30,6 +30,7 @@ $result = $db->prepare("SELECT * FROM cat");
 $result->execute();
 for($i=0; $row = $result->fetch(); $i++){
 ?>
+<option></option>
 <option value="$row['id'];"><?php echo $row['name']; } ?></option>
 </select>
 <div >
@@ -48,7 +49,7 @@ for($i=0; $row = $result->fetch(); $i++){
         
         // Check if selling is lower than buying
         if (selling < buying) {
-            document.getElementById('resultInput').value = "Error: Selling price cannot be lower than buying price";
+            document.getElementById('resultInput').value = "Selling price cannot be lower than buying price";
             return; // Exit the function early
         }
         
@@ -61,7 +62,7 @@ for($i=0; $row = $result->fetch(); $i++){
             document.getElementById('resultInput').value = result;
         } else {
             // Handle division by zero or invalid input
-            document.getElementById('resultInput').value = "Error: Division by zero or invalid input";
+            document.getElementById('resultInput').value = "Division by zero or invalid input";
         }
     }
 

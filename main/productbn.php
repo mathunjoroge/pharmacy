@@ -41,43 +41,6 @@ products by batch numbers
     })
   })
 </script>
-
-
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>   
-
-
 </head>
 <?php
 function createRandomPassword() {
@@ -196,37 +159,9 @@ if($position=='pharmacist') {
     </tbody>
 </table><div>
 <?php
-
-            include('../connect.php');
-                $result = $db->prepare("SELECT* FROM products RIGHT OUTER JOIN batch ON batch.product_id=products.product_id");
-                $result->execute();
-                $rowcount123 = $result->rowcount();
-
-            
-//calculate total page number for the given table in the database 
-$total=ceil($rowcount123/$limit); ?>
-<ul >
-<?php if($id>1)
-{
-    //Go to previous page to show previous 10 items. If its in page 1 then it is inactive
-    echo "<button class='btn btn-primary'><a href='?id=".($id-1)."' class='button'>PREVIOUS</a></button>";
-}
-if($id!=$total)
-{
-    ////Go to previous page to show next 10 items.
-    echo "<button class='btn btn-primary'><a href='?id=".($id+1)."' class='button'>NEXT</a></button>";
-}
+include "pagination.php";
 ?>
-
-<?php
-//show all the page link with page number. When click on these numbers go to particular page. 
-        for($i=1;$i<=$total;$i++)
-        {
-            if($i==$id) { echo "<button class='active'><span class='current'>".$i."</button>"; }
-            
-            else { echo "<button class='btn btn-primary'><a href='?id=".$i."'>".$i."</a></button>"; }
-        }
-?></div>
+</div>
 <div class="clearfix"></div>
 
 </div>
