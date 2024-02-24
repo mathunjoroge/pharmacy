@@ -1,28 +1,28 @@
 <?php
-require_once('auth.php');
-include('../connect.php');
+ini_set("display_errors", "On");
+require_once "auth.php";
+include "../connect.php";
+function formatMoney($number, $fractional = false)
+{
+    if ($fractional) {
+        $number = sprintf("%.2f", $number);
+    }
+    while (true) {
+        $replaced = preg_replace("/(-?\d+)(\d\d\d)/", '$1,$2', $number);
+        if ($replaced != $number) {
+            $number = $replaced;
+        } else {
+            break;
+        }
+    }
+    return $number;
+}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <title>
 Preview Invoice
 </title>
-<link href="css/bootstrap.css" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
 
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<style type="text/css">
-
-.sidebar-nav {
-padding: 9px 0;
-}
-</style>
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
 <script language="javascript">
 function Clickheretoprint()
 { 
@@ -37,250 +37,263 @@ docprint.document.close();
 docprint.focus(); 
 }
 </script>
-<?php
-$invoice=$_GET['invoice'];
+<link href="css/bootstrap.css" rel="stylesheet">
 
-$result = $db->prepare("SELECT * FROM sales WHERE invoice_number= :userid");
-$result->bindParam(':userid', $invoice);
+<link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
+
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="lib/jquery.js" type="text/javascript"></script>
+<script src="src/facebox.js" type="text/javascript"></script>
+<head>
+<style>
+body {
+margin: 0;
+padding: 0;
+font-family: 'PT Sans', sans-serif;
+}
+
+@page {
+size: 2.8in 11in;
+margin-top: 0cm;
+margin-left: 0cm;
+margin-right: 0cm;
+}
+
+table {
+width: 100%;
+}
+
+tr {
+width: 100%;
+
+}
+
+h1 {
+text-align: center;
+vertical-align: middle;
+}
+
+#logo {
+width: 60%;
+text-align: center;
+-webkit-align-content: center;
+align-content: center;
+padding: 5px;
+margin: 2px;
+display: block;
+margin: 0 auto;
+}
+
+header {
+width: 100%;
+text-align: center;
+-webkit-align-content: center;
+align-content: center;
+vertical-align: middle;
+}
+
+.items thead {
+text-align: center;
+}
+
+.center-align {
+text-align: center;
+}
+
+.bill-details td {
+font-size: 12px;
+}
+
+.receipt {
+font-size: medium;
+}
+
+.items .heading {
+font-size: 12.5px;
+text-transform: uppercase;
+border-top:1px solid black;
+margin-bottom: 4px;
+border-bottom: 1px solid black;
+vertical-align: middle;
+}
+
+.items thead tr th:first-child,
+.items tbody tr td:first-child {
+width: 47%;
+min-width: 47%;
+max-width: 47%;
+word-break: break-all;
+text-align: left;
+}
+
+.items td {
+font-size: 12px;
+text-align: right;
+vertical-align: bottom;
+}
+
+.price::before {
+
+font-family: Arial;
+text-align: right;
+}
+
+.sum-up {
+text-align: right !important;
+}
+.total {
+font-size: 13px;
+border-top:1px dashed black !important;
+border-bottom:1px dashed black !important;
+}
+.total.text, .total.price {
+text-align: right;
+}
+
+.line {
+border-top:1px solid black !important;
+}
+.heading.rate {
+width: 20%;
+}
+.heading.amount {
+width: 25%;
+}
+.heading.qty {
+width: 5%
+}
+p {
+padding: 1px;
+margin: 0;
+}
+section, footer {
+font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+<?php include "navfixed.php";  ?>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div  id="content">
+<header>
+<?php
+$result = $db->prepare("SELECT *  FROM pharmacy_details");
 $result->execute();
-for($i=0; $row = $result->fetch(); $i++){
-$cname=$row['name'];
-$invoice=$row['invoice_number'];
-$date = $row['date'];
-$d11 = strtotime ( $date ) ;
-$d11 = date ( 'j/m/Y' , $d11 );
-
-$cash=$row['cashtendered'];
-$cashier=$row['cashier'];
-
-$pt=$row['type'];
-$am=$row['amount'];
-if($pt=='cash'){
-$cash=$row['cashtendered'];
-$amount=$cash-$am;
-}
-}
-?>
+for ($i = 0; ($row = $result->fetch()); $i++) {
+    $slogan = $row["slogan"]; ?>
+<div id="logo" class="media">
+<div class="container"><?php echo $row["pharmacy_name"]; ?> </div>
+<div class="container"><?php echo $row["location"]; ?> </div>
+<div class="container"><?php echo $row["contact"]; ?> </div>
+<div class="container"><?php echo $row["email"]; ?> </div>
+</div>
 <?php
-function createRandomPassword() {
-$chars = "003232303232023232023456789";
-srand((double)microtime()*1000000);
-$i = 0;
-$pass = '' ;
-while ($i <= 7) {
-
-$num = rand() % 33;
-
-$tmp = substr($chars, $num, 1);
-
-$pass = $pass . $tmp;
-
-$i++;
-
-}
-return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body style="text-transform:capitalize;">
-
-<?php include('navfixed.php');?>
-<div class="container-fluid">
-<div class="row-fluid">
-
-</form>
-</div>
-</li>
-
-</ul>           
-</div><!--/.well -->
-</div><!--/span-->
-
-<div class="span10">
-<a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-success" id="back"><i class="icon-arrow-left"></i> New sale</button></a>
-
-<div class="content" id="content">
-<div style="margin: 0 auto; padding: 20px; width: 900px; font-weight: normal;">
-<div style="width: 100%; height: 190px;" >
-<div style="width: 900px; float: left;">
-<center><div style="font:bold 25px 'Aleo';">
-	<?php
-				
-			$result = $db->prepare("SELECT *  FROM pharmacy_details");
-			$result->execute();
-			for($i=0; $row = $result->fetch(); $i++){
-		
-?>
-<div class="container"><?php echo $row['pharmacy_name']; ?> </div>
-<div class="container"><?php echo $row['location']; ?> </div>
-<div class="container"><?php echo $row['contact']; ?> </div>
-<div class="container"><?php echo $row['email']; ?> </div>
-<div>
-Sales Receipt
-</div>
-<?php } ?>
-
-</div>
-
-</center>
-<div>
-<?php
-$resulta = $db->prepare("SELECT * FROM customer WHERE customer_name= :a");
-$resulta->bindParam(':a', $cname);
-$resulta->execute();
-for($i=0; $rowa = $resulta->fetch(); $i++){
-$address=$rowa['address'];
-$contact=$rowa['contact'];
 }
 ?>
-</div>
-</div>
-<div style="width: 136px; float: left; height: 70px;">
-<table cellpadding="3" cellspacing="0" style="font-family: arial; font-size: 12px;text-align:left;width : 100%;">
+</header>
 
-<tr>
+<table class="bill-details">
+<tbody>
 
+<th class="center-align" colspan="2"><span class="receipt">Original Receipt</span></th>
 </tr>
-<td><?php echo $invoice ?></td>
-</tr>
-<tr>
-<td>Date :</td>
-<td><?php echo $d11 ?></td>
-</tr>
+</tbody>
 </table>
 
-</div>
-<div class="clearfix"></div>
-</div>
-<div style="width: 100%; margin-top:-70px;">
-<table border="1" cellpadding="4" cellspacing="0" style="font-family: arial; font-size: 12px;	text-align:left;" width="100%">
+<table class="items">
 <thead>
 <tr>
-
-<th> Brand Name </th>
-<th > Generic Name </th>
-<th> Qty </th>
-<th> Price </th>
-<th> discount </th>
-<th> Amount </th>
+<th class="heading name">Brand Name</th>
+<th class="heading qty">Qty</th>
+<th class="heading rate">price</th>
+<th class="heading amount">Amount</th>
 </tr>
 </thead>
 <tbody>
-
-
 <?php
-$id=$_GET['invoice'];
+$id = $_GET["invoice"];
 $result = $db->prepare("SELECT * FROM sales_order WHERE invoice= :userid");
-$result->bindParam(':userid', $id);
+$result->bindParam(":userid", $id);
 $result->execute();
-for($i=0; $row = $result->fetch(); $i++){
-?>
-<tr class="record">
-<td><?php echo $row['gen_name']; ?></td>
-<td><?php echo $row['product_code']; ?></td>				
-<td><?php echo $row['qty']; ?></td>
-<td>
-<?php
-$ppp=$row['price'];
+for ($i = 0; ($row = $result->fetch()); $i++) { ?>
+<tr>
+<td><?php echo $row["product_code"]; ?></td>
+<td><?php echo $row["qty"]; ?></td>
+<td class="price"><?php
+$ppp = $row["price"];
 echo formatMoney($ppp, true);
-?>
-</td>
-<td>
-<?php
-$ddd=$row['discount'];
-echo formatMoney($ddd, true);
-?>
-</td>
-<td>
-<?php
-$dfdf=$row['amount'];
+?></td>
+<td class="price"><?php
+$dfdf = round($row["amount"]);
 echo formatMoney($dfdf, true);
-?>
-</td>
+?></td>
 </tr>
-<?php
-}
+<?php }
 ?>
 
 <tr>
-<td colspan="5" style=" text-align:right;"><strong style="font-size: 12px;">Total: &nbsp;</strong></td>
-<td colspan="2"><strong style="font-size: 12px;">
-<?php
-$sdsd=$_GET['invoice'];
-$resultas = $db->prepare("SELECT sum(amount) FROM sales_order WHERE invoice= :a");
-$resultas->bindParam(':a', $sdsd);
-$resultas->execute();
-for($i=0; $rowas = $resultas->fetch(); $i++){
-$fgfg=$rowas['sum(amount)'];
-echo formatMoney($fgfg, true);
-}
-?>
-</strong></td>
-</tr>
-<?php if($pt=='cash'){
-?>
-<tr>
-<td colspan="5"style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">Cash Tendered:&nbsp;</strong></td>
-<td colspan="2"><strong style="font-size: 12px; color: #222222;">
-<?php
-echo formatMoney($cash, true);
-?>
-</strong></td>
-</tr>
-<?php
-}
-?>
-<tr>
-<td colspan="5" style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">
-<font style="font-size:20px;">
-<?php
-if($pt=='cash'){
-echo 'Change:';
-}
-if($pt=='credit'){
-echo 'Due Date:';
-}
-?>&nbsp;
-</strong></td>
-<td colspan="2"><strong style="font-size: 15px; color: #222222;">
-<?php
-function formatMoney($number, $fractional=false) {
-if ($fractional) {
-$number = sprintf('%.2f', $number);
-}
-while (true) {
-$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-if ($replaced != $number) {
-$number = $replaced;
-} else {
-break;
-}
-}
-return $number;
-}
-if($pt=='credit'){
-echo $cash;
-}
-if($pt=='cash'){
-echo formatMoney($amount, true);
-}
-?>
-</strong></td>
-</tr>
+                <th colspan="3" class="total text">Total</th>
+                <th class="total price"><?php
+$invoice = $_GET["invoice"];
+$result = $db->prepare("SELECT sum(amount) FROM sales_order WHERE invoice= :a");
+$result->bindParam(":a", $invoice);
+$result->execute();
+for ($i = 0; ($row = $result->fetch()); $i++) {
+    $total = $row["sum(amount)"];
+    echo formatMoney(round($total), true);
+
+?></th>
+<?php } ?>
+            </tr>
+
 
 </tbody>
 </table>
-<div><p>&nbsp;</p></div>
-<td>Served By:</td>
-<td><?php echo $_SESSION['SESS_FIRST_NAME'];?></td>
-
-
+<section>
+<p>
+served by: <span><?php echo $_SESSION["SESS_FIRST_NAME"]; ?></span>
+</p>
+<p style="text-align:center">
+Thank you for your visit!
+</p>
+</section>
+<footer style="text-align:center">
+<p><?php echo $slogan; ?></p>
+</footer>
 </div>
-</div></div></div>
 <div class="pull-right" style="margin-right:100px;">
-<a href="javascript:Clickheretoprint()" style="font-size:20px;" id="print"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
-</div>
-</div>
-</div>
+<button class="btn btn-success btn-large" style="margin-left: 45%;" value="content" id="goback" onclick="javascript:printDiv('content')" >print receipt</button>
+ <script type="text/javascript">
+function printDiv(content) {
+//Get the HTML of div
+var divElements = document.getElementById(content).innerHTML;
+//Get the HTML of whole page
+var oldPage = document.body.innerHTML;
+
+//Reset the page's HTML with div's HTML only
+document.body.innerHTML = 
+"<html><head><title></title></head><body>" + 
+divElements + "</body>";
+
+//Print Page
+window.print();
+
+//Restore orignal HTML
+document.body.innerHTML = oldPage;          
+}
 
 
+</script>
+<div class="container">
+<?php include "footer.php"; ?>
+</div>
+</body>
+
+</html>

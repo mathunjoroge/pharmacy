@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors", "On");
+?><?php
 session_start();
 include('../connect.php');
 $percent='0.01';
