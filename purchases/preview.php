@@ -80,7 +80,7 @@ $finalcode='INV-'.createRandomPassword();
 ?>
 <body style="text-transform:capitalize;">
 
-<?php include('navfixed.php');?>		
+<?php include('../main/navfixed.php');?>		
 <a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-primary"><i class="icon-arrow-left"></i> record another purchase</button></a>&nbsp;&nbsp;	<a href="..//main/index.php"><button class="btn btn-primary"><i class="icon-arrow-left"></i> Go to sales</button></a>
 
 <div class="container" id="content">
@@ -248,6 +248,10 @@ for ($i = 0; ($row = $result->fetch()); $i++) {
 </div>
 <div class="pull-right" style="margin-right:100px;">
 		<a href="javascript:Clickheretoprint()" style="font-size:20px;"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
+		
+		</div>
+		<div class="container">
+		<?php include('../main/footer.php');?>
 		</div>	
 </div>
 </div>
