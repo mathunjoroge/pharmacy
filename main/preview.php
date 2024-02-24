@@ -23,20 +23,20 @@ Preview Invoice
 </title>
 
 
-<script language="javascript">
-function Clickheretoprint()
-{ 
-var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-disp_setting+="scrollbars=yes,width=800, height=400, left=100, top=25"; 
-var content_vlue = document.getElementById("content").innerHTML; 
-var docprint=window.open("","",disp_setting); 
-docprint.document.open(); 
-docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');          
-docprint.document.write(content_vlue); 
-docprint.document.close(); 
-docprint.focus(); 
-}
-</script>
+<style type="text/css">
+    @media print {
+#content{
+    border: 1px solid white;
+    height: auto !important;
+   
+    page-break-before: always !important;
+    page-break-after: auto;
+ }
+
+.paper-size {
+    width: 76mm !important;
+}}
+</style>
 <link href="css/bootstrap.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
@@ -49,131 +49,7 @@ docprint.focus();
 <script src="lib/jquery.js" type="text/javascript"></script>
 <script src="src/facebox.js" type="text/javascript"></script>
 <head>
-<style>
-body {
-margin: 0;
-padding: 0;
-font-family: 'PT Sans', sans-serif;
-}
 
-@page {
-size: 2.8in 11in;
-margin-top: 0cm;
-margin-left: 0cm;
-margin-right: 0cm;
-}
-
-table {
-width: 100%;
-}
-
-tr {
-width: 100%;
-
-}
-
-h1 {
-text-align: center;
-vertical-align: middle;
-}
-
-#logo {
-width: 60%;
-text-align: center;
--webkit-align-content: center;
-align-content: center;
-padding: 5px;
-margin: 2px;
-display: block;
-margin: 0 auto;
-}
-
-header {
-width: 100%;
-text-align: center;
--webkit-align-content: center;
-align-content: center;
-vertical-align: middle;
-}
-
-.items thead {
-text-align: center;
-}
-
-.center-align {
-text-align: center;
-}
-
-.bill-details td {
-font-size: 12px;
-}
-
-.receipt {
-font-size: medium;
-}
-
-.items .heading {
-font-size: 12.5px;
-text-transform: uppercase;
-border-top:1px solid black;
-margin-bottom: 4px;
-border-bottom: 1px solid black;
-vertical-align: middle;
-}
-
-.items thead tr th:first-child,
-.items tbody tr td:first-child {
-width: 47%;
-min-width: 47%;
-max-width: 47%;
-word-break: break-all;
-text-align: left;
-}
-
-.items td {
-font-size: 12px;
-text-align: right;
-vertical-align: bottom;
-}
-
-.price::before {
-
-font-family: Arial;
-text-align: right;
-}
-
-.sum-up {
-text-align: right !important;
-}
-.total {
-font-size: 13px;
-border-top:1px dashed black !important;
-border-bottom:1px dashed black !important;
-}
-.total.text, .total.price {
-text-align: right;
-}
-
-.line {
-border-top:1px solid black !important;
-}
-.heading.rate {
-width: 20%;
-}
-.heading.amount {
-width: 25%;
-}
-.heading.qty {
-width: 5%
-}
-p {
-padding: 1px;
-margin: 0;
-}
-section, footer {
-font-size: 12px;
-}
-</style>
 </head>
 
 <body>
@@ -182,32 +58,35 @@ font-size: 12px;
 <div>&nbsp;</div>
 <div>&nbsp;</div>
 <div  id="content">
-<header>
+<div class="container">
+<center>
 <?php
 $result = $db->prepare("SELECT *  FROM pharmacy_details");
 $result->execute();
 for ($i = 0; ($row = $result->fetch()); $i++) {
     $slogan = $row["slogan"]; ?>
-<div id="logo" class="media">
+<div id="logo" class="container">
 <div class="container"><?php echo $row["pharmacy_name"]; ?> </div>
 <div class="container"><?php echo $row["location"]; ?> </div>
 <div class="container"><?php echo $row["contact"]; ?> </div>
 <div class="container"><?php echo $row["email"]; ?> </div>
-</div>
+
 <?php
 }
 ?>
-</header>
+
 
 <table class="bill-details">
 <tbody>
 
 <th class="center-align" colspan="2"><span class="receipt">Original Receipt</span></th>
+</div>
+</center>
 </tr>
 </tbody>
 </table>
 
-<table class="items">
+<table class="table table-bordered">
 <thead>
 <tr>
 <th class="heading name">Brand Name</th>
@@ -219,7 +98,7 @@ for ($i = 0; ($row = $result->fetch()); $i++) {
 <tbody>
 <?php
 $id = $_GET["invoice"];
-$result = $db->prepare("SELECT * FROM sales_order WHERE invoice= :userid");
+$result = $db->prepare("SELECT transaction_id,gen_name,product_code,sales_order.price AS price,discount,amount,sales_order.qty AS qty FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE invoice= :userid");
 $result->bindParam(":userid", $id);
 $result->execute();
 for ($i = 0; ($row = $result->fetch()); $i++) { ?>
@@ -268,16 +147,21 @@ Thank you for your visit!
 <p><?php echo $slogan; ?></p>
 </footer>
 </div>
+</div>
+</div>
 <div class="pull-right" style="margin-right:100px;">
 <button class="btn btn-success btn-large" style="margin-left: 45%;" value="content" id="goback" onclick="javascript:printDiv('content')" >print receipt</button>
+
  <script type="text/javascript">
 function printDiv(content) {
 //Get the HTML of div
 var divElements = document.getElementById(content).innerHTML;
+
 //Get the HTML of whole page
 var oldPage = document.body.innerHTML;
 
 //Reset the page's HTML with div's HTML only
+
 document.body.innerHTML = 
 "<html><head><title></title></head><body>" + 
 divElements + "</body>";
@@ -288,8 +172,6 @@ window.print();
 //Restore orignal HTML
 document.body.innerHTML = oldPage;          
 }
-
-
 </script>
 <div class="container">
 <?php include "footer.php"; ?>

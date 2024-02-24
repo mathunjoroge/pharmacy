@@ -9,8 +9,9 @@ $a = $_POST['invoice'];
 $b = $_POST['cashier'];
 $c = $_POST['date'];
 $d = $_POST['ptype'];
-$e = $_POST['amount'];
-$z = $_POST['profit'];
+$e = round($_POST['amount']);
+$z = ($_POST['profit']);
+
 
 $xx = $_POST['reset'];
 

@@ -5,11 +5,11 @@
 <title>
 Preview Invoice
 </title>
- <link href="css/bootstrap.css" rel="stylesheet">
+ <link href="../main/css/bootstrap.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
   
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="../main/css/font-awesome.min.css">
     <style type="text/css">
     
       .sidebar-nav {
@@ -18,9 +18,9 @@ Preview Invoice
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
+<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="../main/lib/jquery.js" type="text/javascript"></script>
+<script src="../main/src/facebox.js" type="text/javascript"></script>
 <script language="javascript">
 function Clickheretoprint()
 { 

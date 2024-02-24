@@ -50,10 +50,10 @@ $q->execute(array($c,$b));
 $d=$asasa*$c;
 $profit=$p*$c;
 // query
-$sql = "INSERT INTO sales_order (invoice,product,qty,amount,name,price,profit,product_code,gen_name,date,discount,batch,balance) VALUES (:a,:b,:c,:d,:e,:f,:h,:i,:j,:k,:disc,:bt,:bal)";
+$sql = "INSERT INTO sales_order (invoice,product,qty,amount,price,profit,date,discount,batch) VALUES (:a,:b,:c,:d,:f,:h,:k,:disc,:bt)";
 $q = $db->prepare($sql);
-$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':d'=>$d,':e'=>$name,':f'=>$asasa,':h'=>$profit,':i'=>$code,':j'=>$gen,':k'=>$date,':disc'=>$disc,
-	':bt'=>$batch,':bal'=>$balance));
+$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':d'=>$d,':f'=>$asasa,':h'=>$profit,':k'=>$date,':disc'=>$disc,
+	':bt'=>$batch));
 
 header("location: sales.php?id=cash&invoice=$a");
 

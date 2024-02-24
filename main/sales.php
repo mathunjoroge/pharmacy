@@ -168,8 +168,7 @@ document.getElementById('disc').max =discountmax;
 	<thead>
 		<tr>
 			<th> Product Name </th>
-			<th> Generic Name </th>
-			<th> Category / Description </th>
+			<th> Generic Name </th>		
 			<th> Price </th>
 			<th> Qty </th>
 			<th> Amount </th>
@@ -182,7 +181,7 @@ document.getElementById('disc').max =discountmax;
 			<?php
 $id = $_GET['invoice'];
 include '../connect.php';
-$result = $db->prepare("SELECT * FROM sales_order WHERE invoice= :userid AND amount!= ''");
+$result = $db->prepare("SELECT transaction_id,gen_name,product_code,sales_order.price AS price,discount,amount,sales_order.qty AS qty FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE invoice= :userid AND amount!= ''");
 $result->bindParam(':userid', $id);
 $result->execute();
 for ($i = 1; $row = $result->fetch(); $i++) {
@@ -191,7 +190,6 @@ for ($i = 1; $row = $result->fetch(); $i++) {
 			<td hidden><?php echo $row['product']; ?></td>
 			<td><?php echo $row['product_code']; ?></td>
 			<td><?php echo $row['gen_name']; ?></td>
-			<td><?php echo $row['name']; ?></td>
 			<?php $disc = $row['discount'];?>
 			<td>
 			<?php
@@ -215,7 +213,7 @@ echo $row['discount'];
 	?>
 			</td>
 			<td width="90"><a rel="facebox" href="editsales.php?id=<?php echo $row['transaction_id']; ?>"><button class="btn btn-mini btn-warning"><i class="icon icon-edit"></i> edit </button></a>
-			<a href="delete.php?id=<?php echo $row['transaction_id']; ?>&invoice=<?php echo $_GET['invoice']; ?>&dle=<?php echo $_GET['id']; ?>&qty=<?php echo $row['qty']; ?>&code=<?php echo $row['product']; ?>"><button class="btn btn-mini btn-warning"><i class="icon icon-remove"></i> Cancel </button></a>
+			<a href="delete.php?id=<?php echo $row['transaction_id']; ?>&invoice=<?php echo $_GET['invoice']; ?>&dle=<?php echo $_GET['id']; ?>&qty=<?php echo $row['qty']; ?>"><button class="btn btn-mini btn-warning"><i class="icon icon-remove"></i> Cancel </button></a>
 
 			</tr>
 			<?php
@@ -227,15 +225,9 @@ echo $row['discount'];
 			<th>  </th>
 			<th>  </th>
 			<th>  </th>
-			<td> Total Amount: </td>
-			<td>  </td>
-			<th>  </th>
-		</tr>
-			<tr>
-				<th colspan="5"><strong style="font-size: 12px; color: #222222;">Total:</strong></th>
-				<td colspan="1"><strong style="font-size: 12px; color: #222222;">
-				<?php
-function formatMoney($number, $fractional = false) {
+			<td> sub-Total</td>
+			<?php
+			function formatMoney($number, $fractional = false) {
 	if ($fractional) {
 		$number = sprintf('%.2f', $number);
 	}
@@ -250,33 +242,32 @@ function formatMoney($number, $fractional = false) {
 	return $number;
 }
 $sdsd = $_GET['invoice'];
-$resultas = $db->prepare("SELECT sum(amount) FROM sales_order WHERE invoice= :a");
-$resultas->bindParam(':a', $sdsd);
-$resultas->execute();
-for ($i = 0; $rowas = $resultas->fetch(); $i++) {
-	$fgfg = $rowas['sum(amount)'];
-	echo formatMoney($fgfg, true);
+$result = $db->prepare("SELECT sum(amount),sum(profit) FROM sales_order WHERE invoice= :a");
+$result->bindParam(':a', $sdsd);
+$result->execute();
+for ($i = 0; $row = $result->fetch(); $i++) {
+	$total = $row['sum(amount)']; 
+	$profit = $row['sum(profit)'];?>
+			<td><?php echo formatMoney($total, true); ?>  </td>
+		
+		</tr>
+			<tr>
+				<th colspan="5"><strong style="font-size: 12px; color: #222222;">grand-Total:</strong></th>
+				<td></td>
+				<td colspan="1"><strong style="font-size: 12px; color: #222222;">
+				<?php
+
+	echo formatMoney($total, true);
 }
 ?>
 				</strong></td>
-				<td colspan="1"><strong style="font-size: 12px; color: #222222;">
-			<?php
-$resulta = $db->prepare("SELECT sum(profit) FROM sales_order WHERE invoice= :b");
-$resulta->bindParam(':b', $sdsd);
-$resulta->execute();
-for ($i = 0; $qwe = $resulta->fetch(); $i++) {
-	$asd = $qwe['sum(profit)'];
-
-}
-?>
-
-				</td>
-				<th></th>
+			
+				
 			</tr>
 
 	</tbody>
 </table><br>
-<a rel="facebox" href="checkout.php?pt=<?php echo $_GET['id'] ?>&invoice=<?php echo $_GET['invoice'] ?>&total=<?php echo $fgfg ?>&totalprof=<?php echo $asd ?>&cashier=<?php echo $_SESSION['SESS_FIRST_NAME'] ?>"><button class="btn btn-success btn-large btn-block" accesskey="s"><i class="icon icon-save icon-large" accesskey="s"></i> SAVE</button></a>
+<a rel="facebox" href="checkout.php?pt=<?php echo $_GET['id'] ?>&invoice=<?php echo $_GET['invoice'] ?>&total=<?php echo $total ?>&totalprof=<?php echo $profit ?>&cashier=<?php echo $_SESSION['SESS_FIRST_NAME'] ?>"><button class="btn btn-success btn-large btn-block" accesskey="s"><i class="icon icon-save icon-large" accesskey="s"></i> SAVE</button></a>
 <div class="clearfix"></div>
 </div>
 </div>
