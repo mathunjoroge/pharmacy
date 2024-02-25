@@ -1,6 +1,6 @@
-	<link href="vendors/chosen.min.css" rel="stylesheet" media="screen">
-        <script src="vendors/chosen.jquery.min.js"></script>
-        <script src="vendors/bootstrap-datepicker.js"></script>
+	<link href="../main/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <script src="../main/vendors/chosen.jquery.min.js"></script>
+        <script src="../main/vendors/bootstrap-datepicker.js"></script>
         <script>
         $(function() {
 <!--             $(".datepicker").datepicker(); -->
@@ -10,28 +10,26 @@
 
         });
         </script>
-		  
-
 
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-<script src="js/bootstrap.js" type="text/javascript"></script>
+    <script src="../main/js/bootstrap-transition.js"></script>
+    <script src="../main/js/bootstrap-alert.js"></script>
+    <script src="../main/js/bootstrap-modal.js"></script>
+    <script src="../main/js/bootstrap-dropdown.js"></script>
+    <script src="../main/js/bootstrap-scrollspy.js"></script>
+    <script src="../main/js/bootstrap-tab.js"></script>
+    <script src="../main/js/bootstrap-tooltip.js"></script>
+    <script src="../main/js/bootstrap-popover.js"></script>
+    <script src="../main/js/bootstrap-button.js"></script>
+    <script src="../main/js/bootstrap-collapse.js"></script>
+    <script src="../main/js/bootstrap-carousel.js"></script>
+    <script src="../main/js/bootstrap-typeahead.js"></script>
+<script src="../main/js/bootstrap.js" type="text/javascript"></script>
 
-<script type="text/javascript" charset="utf-8" language="javascript" src="js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf-8" language="javascript" src="js/DT_bootstrap.js"></script><div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
+<script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/DT_bootstrap.js"></script><div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
 <div align="center" style="bottom:10%;"> <?php echo "&copy;";?><?php function auto_copyright($year = 'auto'){ ?>
    <?php if(intval($year) == 'auto'){ $year = date('Y'); } ?>
    <?php if(intval($year) == date('Y')){ echo intval($year); } ?>

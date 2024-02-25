@@ -39,9 +39,9 @@ $q = $db->prepare($sql);
 $q->execute(array(':date'=>$date,':pid'=>$pid,':bn'=>$bn,':edate'=>$edate,':c'=>$c));
 
 // query
-$sql = "INSERT INTO pending (invoice,product,qty,price,name,amount,product_code,gen_name,date,batch) VALUES (:a,:b,:c,:f,:e,:mn,:i,:j,:k,:batch)";
+$sql = "INSERT INTO pending (invoice,product,qty,price,amount,date,batch) VALUES (:a,:b,:c,:f,:mn,:k,:batch)";
 $q = $db->prepare($sql);
-$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':e'=>$name,':f'=>$asasa,':mn'=>$mn,':i'=>$code,':j'=>$gen,':k'=>$date,':batch'=>$bn));
+$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':f'=>$asasa,':mn'=>$mn,':k'=>$date,':batch'=>$bn));
 header("location: sales.php?id=$w&invoice=$a");
 
 

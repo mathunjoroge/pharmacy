@@ -142,7 +142,7 @@ for ($i = 0; ($row = $result->fetch()); $i++) {
 			
 				<?php
 					$id=$_GET['invoice'];
-					$result = $db->prepare("SELECT * FROM pending WHERE invoice= :userid");
+					$result = $db->prepare("SELECT transaction_id,gen_name,product_code,pending.price AS price,discount,amount,pending.qty AS qty FROM pending JOIN products ON products.product_id=pending.product WHERE invoice= :userid");
 					$result->bindParam(':userid', $id);
 					$result->execute();
 					for($i=0; $row = $result->fetch(); $i++){

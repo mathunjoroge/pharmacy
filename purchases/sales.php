@@ -4,46 +4,24 @@ include('../connect.php');
 include('../main/navfixed.php');
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-
+<!DOCTYPE html>
 <html>
 <head>
 <!-- js -->			
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
+<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="../main/lib/jquery.js" type="text/javascript"></script>
+<script src="../main/src/facebox.js" type="text/javascript"></script>
 <script type="text/javascript">
-jQuery(document).ready(function($) {
-$('a[rel*=facebox]').facebox({
-loadingImage : 'src/loading.gif',
-closeImage   : 'src/closelabel.png'
-})
-})
+  jQuery(document).ready(function($) {
+    $('a[rel*=facebox]').facebox({
+      loadingImage : '../main/src/loading.gif',
+      closeImage   : '../main/src/closelabel.png'
+    })
+  })
 </script>
-<script language="javascript">
-function Clickheretoprint()
-{ 
-var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-disp_setting+="scrollbars=yes,width=800, height=400, left=100, top=25"; 
-var content_vlue = document.getElementById("content").innerHTML; 
-
-var docprint=window.open("","",disp_setting); 
-docprint.document.open(); 
-docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');          
-docprint.document.write(content_vlue); 
-docprint.document.close(); 
-docprint.focus(); 
-}
-</script>
-
 <title>
 purchases
 </title>
-
-
-
 <link href="../main/vendors/uniform.default.css" rel="stylesheet" media="screen">
 <link href="../main/css/bootstrap.css" rel="stylesheet">
 
@@ -131,7 +109,6 @@ $rowcount123 = $result->rowcount();
 
 ?><div style="text-align:center;"><font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';"><?php echo $rowcount123; ?></font><a rel="facebox" href="../main/level.php">  <button class="btn btn-primary">Low running products</button></a>
 </div></div>
-<script type="text/javascript" src="jquery-1.8.0.min.js"></script>
 <div class="container">
 <form action="incoming.php" method="post" >
 <input type="hidden" name="pt" value="<?php echo $_GET['id']; ?>" />
@@ -164,11 +141,9 @@ $i++){
 <tr>
 <th> Product Name </th>
 <th> Generic Name </th>
-<th> Category / Description </th>
 <th> Price </th>
 <th> Qty </th>
 <th> cost </th>
-
 <th> Action </th>
 </tr>
 </thead>
@@ -177,8 +152,8 @@ $i++){
 <?php
 $id=$_GET['invoice'];
 
-$result = $db->prepare("SELECT * FROM pending WHERE invoice= :userid");
-$result->bindParam(':userid', $id);
+$result = $db->prepare("SELECT transaction_id,gen_name,product_code,pending.price AS price,discount,amount,pending.qty AS qty FROM pending JOIN products ON products.product_id=pending.product  WHERE invoice= :invoice");
+$result->bindParam(':invoice', $id);
 $result->execute();
 for($i=1; $row = $result->fetch(); $i++){
 ?>
@@ -186,7 +161,7 @@ for($i=1; $row = $result->fetch(); $i++){
 <td hidden><?php echo $row['product']; ?></td>
 <td><?php echo $row['product_code']; ?></td>
 <td><?php echo $row['gen_name']; ?></td>
-<td><?php echo $row['name']; ?></td>
+
 <td>
 <?php
 $ppp=$row['price'];
@@ -204,7 +179,7 @@ echo formatMoney($dfdf, true);
 </td>
 <td width="90"><a rel="facebox" href="editspurchase.php?id=<?php echo $row['transaction_id']; ?>"><button class="btn btn-mini btn-warning"><i class="icon icon-remove"></i> edit </button></a>
 
-<a href="delete.php?id=<?php echo $row['transaction_id']; ?>&invoice=<?php echo $_GET['invoice']; ?>&dle=<?php echo $_GET['id']; ?>&qty=<?php echo $row['qty'];?>&code=<?php echo $row['product'];?>"><button class="btn btn-mini btn-warning"><i class="icon icon-remove"></i> Cancel </button></a>
+<a href="delete.php?id=<?php echo $row['transaction_id']; ?>&invoice=<?php echo $_GET['invoice']; ?>&dle=<?php echo $_GET['id']; ?>&qty=<?php echo $row['qty'];?>"><button class="btn btn-mini btn-warning"><i class="icon icon-remove"></i> Cancel </button></a>
 </tr>
 <?php
 }
