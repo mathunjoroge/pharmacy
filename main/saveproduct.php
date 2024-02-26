@@ -14,7 +14,7 @@ $h = $_POST['gen'];
 $i= date('m-Y', strtotime('+2 years'));
 $j=$e;
 $k = $_POST['level'];  
-$bn='entry batch';
+$bn='entry_batch_1';
 // query
 $sql = "INSERT INTO products (product_code,product_name,price,qty,o_price,gen_name,expiry_date,instock,level,markup) VALUES (:a,:b,:c,:e,:f,:h,:i,:j,:k,:l)";
 $q = $db->prepare($sql);
