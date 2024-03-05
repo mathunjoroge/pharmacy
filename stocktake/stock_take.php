@@ -104,9 +104,9 @@ include('../main/navfixed.php');
                         <td><?php echo isset($brand) ? $brand : $drug; ?></td>
                         <input type="hidden" name="drug_id[]" value="<?php echo $drug_id; ?>">
                         <td><input style="width: 5rem;" type="number" name="qty[]" value="<?php echo $qty; ?>" contenteditable="true"></td>
-                        <td><input type="number" name="buying_price[]" id="buying_price_<?php echo $drug_id; ?>" value="<?php echo round($buying_price); ?>" style="width: 5rem;" contenteditable="true"></td>
-                        <td><input type="number" name="selling_price[]" id="selling_price_<?php echo $drug_id; ?>" value="<?php echo round($selling_price); ?>" style="width: 5rem;" contenteditable="true"></td>
-                        <td><input type="number" name="markup[]" id="markup_<?php echo $drug_id; ?>" value="<?php echo $markup; ?>" style="width: 5rem;" readonly></td>
+                        <td><input type="number" name="buying_price[]" id="buying_price" value="<?php echo round($buying_price); ?>" style="width: 5rem;" contenteditable="true"></td>
+                        <td><input type="number" name="selling_price[]" id="selling_price" value="<?php echo round($selling_price); ?>" style="width: 5rem;" contenteditable="true"></td>
+                        <td><input type="number" name="markup[]" id="markup" value="<?php echo $markup; ?>" style="width: 5rem;" readonly></td>
                     </tr>
                     <?php endwhile; ?>
                 </tbody>

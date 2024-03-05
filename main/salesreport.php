@@ -43,40 +43,6 @@ function Clickheretoprint()
    docprint.focus(); 
 }
 </script>
-
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>
 </head>
 <?php
 function createRandomPassword() {
@@ -149,7 +115,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 				include('../connect.php');
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$result = $db->prepare("SELECT *  FROM sales WHERE date BETWEEN :a AND :b ORDER by transaction_id DESC ");
+				$result = $db->prepare("SELECT *  FROM sales WHERE date >= :a AND date<=:b ORDER by transaction_id DESC ");
 				$result->bindParam(':a', $d1);
 				$result->bindParam(':b', $d2);
 				$result->execute();
@@ -182,7 +148,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 				}
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount) FROM sales WHERE date BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(amount) FROM sales WHERE date >= :a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
@@ -195,7 +161,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			</th>
 				<th colspan="1" style="border-top:1px solid #999999">
 			<?php 
-				$resultia = $db->prepare("SELECT sum(profit) FROM sales WHERE date BETWEEN :c AND :d");
+				$resultia = $db->prepare("SELECT sum(profit) FROM sales WHERE date >= :c AND date<=:d");
 				$resultia->bindParam(':c', $d1);
 				$resultia->bindParam(':d', $d2);
 				$resultia->execute();
@@ -235,7 +201,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 				$d='paid';
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(profit) FROM sales WHERE type=:c  AND date BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(profit) FROM sales WHERE type=:c  AND date>=:a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->bindParam(':c', $c);
@@ -256,7 +222,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 				
 			$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount2) FROM collection WHERE date2 BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(amount2) FROM collection WHERE date2>= :a AND date2<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
@@ -282,7 +248,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE date2 BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE date2>= :a AND date2<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
@@ -304,7 +270,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount) FROM salaries WHERE date BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(amount) FROM salaries WHERE date >= :a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
@@ -326,7 +292,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			
 				$d1=$_GET['d1'];
 				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount) FROM expenses WHERE date BETWEEN :a AND :b");
+				$results = $db->prepare("SELECT sum(amount) FROM expenses WHERE date >=:a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
@@ -373,41 +339,6 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 
 </body>
 <script src="js/jquery.js"></script>
-  <script type="text/javascript">
-$(function() {
 
-
-$(".delbutton").click(function(){
-
-//Save the link in a variable called element
-var element = $(this);
-
-//Find the id of the link that was clicked
-var del_id = element.attr("id");
-
-//Built a url to send
-var info = 'id=' + del_id;
- if(confirm("Sure you want to delete this update? There is NO undo!"))
-		  {
-
- $.ajax({
-   type: "GET",
-   url: "deletesales.php",
-   data: info,
-   success: function(){
-   
-   }
- });
-         $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
-		.animate({ opacity: "hide" }, "slow");
-
- }
-
-return false;
-
-});
-
-});
-</script>
 <?php include('footer.php');?>
 </html>
