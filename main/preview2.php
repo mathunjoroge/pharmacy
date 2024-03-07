@@ -1,16 +1,15 @@
-<?php
-require_once('auth.php');
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
+<head>
+<?php require_once ('auth.php');?>
 <title>
 Preview Invoice
 </title>
- <link href="css/bootstrap.css" rel="stylesheet">
+ <link href="../main/css/bootstrap.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
   
-  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="../main/css/font-awesome.min.css">
     <style type="text/css">
     
       .sidebar-nav {
@@ -19,9 +18,9 @@ Preview Invoice
     </style>
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
+<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="../main/lib/jquery.js" type="text/javascript"></script>
+<script src="../main/src/facebox.js" type="text/javascript"></script>
 <script language="javascript">
 function Clickheretoprint()
 { 
@@ -77,58 +76,34 @@ function createRandomPassword() {
 	}
 	return $pass;
 }
-$finalcode='RS-'.createRandomPassword();
+$finalcode='INV-'.createRandomPassword();
 ?>
-
-
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>
 <body style="text-transform:capitalize;">
+	<div class="container">
 
-<?php include('navfixed.php');?>
+<?php include('../main/navfixed.php');?>		
+<a href="purchaseslist.php?"><button class="btn btn-primary"><i class="icon-arrow-left"></i> back</button></a>
+
+
+<div class="container" id="content">
+	<center>
+		<?php
+$result = $db->prepare("SELECT *  FROM pharmacy_details");
+$result->execute();
+for ($i = 0; ($row = $result->fetch()); $i++) {
+    $slogan = $row["slogan"]; ?>
+<p><?php echo $row["pharmacy_name"]; ?> </p>
+<p><?php echo $row["location"]; ?> </p>
+<p><?php echo $row["contact"]; ?> </p>
+<p><?php echo $row["email"]; ?> </p>
+<p>purchases record</p>
+
+<?php
+}
+?>
 	
-				
-	<a href="purchaseslist.php?"><button class="btn btn-primary"><i class="icon-arrow-left"></i> back</button></a>
-
-<div class="content" id="content">
-<div style="margin: 0 auto; padding: 20px; width: 900px; font-weight: normal;">
-	<div style="width: 100%; height: 190px;" >
-	<div style="width: 900px; float: left;">
-	<center><div style="font:bold 25px 'Aleo';">purchases record</div>
-	elians Pharmacy	
 	</center>
-	<div>
+
 	<?php
 	$resulta = $db->prepare("SELECT * FROM customer WHERE customer_name= :a");
 	$resulta->bindParam(':a', $cname);
@@ -138,16 +113,13 @@ window.onload=startclock;
 	$contact=$rowa['contact'];
 	}
 	?>
-	</div>
-	</div>
-	<div style="width: 136px; float: left; height: 70px;">
-	<table cellpadding="3" cellspacing="0" style="font-family: arial; font-size: 12px;text-align:left;width : 100%;">
+		<table class="table">
 
 		<tr>
 			
 		</tr>
-			<td>INV:</td>
-			<td><?php echo $invoice ?></td>
+			<td></td>
+			<td><?php echo $_GET['invoice']; ?></td>
 		</tr>
 		<tr>
 			<td>Date :</td>
@@ -155,10 +127,6 @@ window.onload=startclock;
 		</tr>
 	</table>
 	
-	</div>
-	<div class="clearfix"></div>
-	</div>
-	<div style="width: 100%; margin-top:-70px;">
 	<table border="1" cellpadding="4" cellspacing="0" style="font-family: arial; font-size: 12px;	text-align:left;" width="100%">
 		<thead>
 			<tr>
@@ -176,7 +144,7 @@ window.onload=startclock;
 			
 				<?php
 					$id=$_GET['invoice'];
-					$result = $db->prepare("SELECT * FROM pending WHERE invoice= :userid");
+					$result = $db->prepare("SELECT transaction_id,gen_name,product_code,pending.price AS price,discount,amount,pending.qty AS qty FROM pending JOIN products ON products.product_id=pending.product WHERE invoice= :userid");
 					$result->bindParam(':userid', $id);
 					$result->execute();
 					for($i=0; $row = $result->fetch(); $i++){
@@ -276,15 +244,15 @@ window.onload=startclock;
 			
 		</tbody>
 	</table>
-	<div><p>&nbsp;</p></div>
-	<td>Viewing As:</td>
-			<td><?php echo $_SESSION['SESS_FIRST_NAME'];?></td>
-			
-	
+		
 	</div>
-	</div>
+</div>
 <div class="pull-right" style="margin-right:100px;">
 		<a href="javascript:Clickheretoprint()" style="font-size:20px;"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
+		
+		</div>
+		<div class="container">
+		<?php include('../main/footer.php');?>
 		</div>	
 </div>
 </div>

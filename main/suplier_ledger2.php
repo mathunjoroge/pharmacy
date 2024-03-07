@@ -1,5 +1,20 @@
 <?php 
 require_once('auth.php');
+$supplier=$_GET['cname'];
+function formatMoney($number, $fractional=false) {
+					if ($fractional) {
+						$number = sprintf('%.2f', $number);
+					}
+					while (true) {
+						$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
+						if ($replaced != $number) {
+							$number = $replaced;
+						} else {
+							break;
+						}
+					}
+					return $number;
+				}
 ?><html><head>
 <title>
 supplier Ledger
@@ -26,16 +41,7 @@ supplier Ledger
 <script src="argiepolicarpio.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/application.js" type="text/javascript" charset="utf-8"></script>
 <link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
+
 </head>
 <body style="text-transform:capitalize;">
 
@@ -59,9 +65,8 @@ supplier Ledger
 </div>
 <?php
 include('../connect.php');
-$tftft=$_GET['cname'];
 $resulta = $db->prepare("SELECT * FROM supliers WHERE suplier_name= :a");
-$resulta->bindParam(':a', $tftft);
+$resulta->bindParam(':a', $supplier);
 $resulta->execute();
 for($i=0; $rowa = $resulta->fetch(); $i++){
 $name=$rowa['suplier_name'];
@@ -77,43 +82,41 @@ echo 'Contact person: '.$rowas['suplier_contact'].'<br>';
 echo 'Contact  '.$rowas['contact_person'].'<br>';
 }
 ?>
+	<table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
+	
+			<tr>
+			<th colspan="1" style="border-top:1px solid #999999"> Total credit purcheases: </th>
+			<th colspan="1" style="border-top:1px solid #999999">  
+				 
+			<?php
+				$c='credit';
+				
+				$results = $db->prepare("SELECT sum(amount) FROM purchases2 WHERE type LIKE '%".$c."%' AND name LIKE '%".$supplier."%'");
+				
+				$results->execute();
+				for($i=0; $rows = $results->fetch(); $i++){
+				$salec=$rows['sum(amount)'];
+				echo formatMoney($salec, true);
+				}
+				?>
+			</th>
+
+		</tr>
+	</table>
 <table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
-	<thead>
 		<tr>
+			 <caption>Payment history</caption>
+			<th> date </th>
 			
-			<th> &nbsp; </th>
-			
-			<th>  &nbsp; </th>
+			<th> amount </th>
 			
 		</tr>
-	</thead>
+	
 	<tbody>
-			<tr class="record">
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-		
 			
-			<td><strong><?php echo $rowa['amount2']; ?></strong></td>
-			
-			</tr>
 			<?php
-			function formatMoney($number, $fractional=false) {
-					if ($fractional) {
-						$number = sprintf('%.2f', $number);
-					}
-					while (true) {
-						$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-						if ($replaced != $number) {
-							$number = $replaced;
-						} else {
-							break;
-						}
-					}
-					return $number;
-				}
-				$tftft=$_GET['cname'];
-				$result = $db->prepare("SELECT * FROM payments WHERE name= :userid  ORDER BY paymentid DESC Limit 10");
-				$result->bindParam(':userid', $tftft);
+			$result = $db->prepare("SELECT * FROM payments WHERE name= :userid");
+				$result->bindParam(':userid', $supplier);
 				$result->execute();
 				for($i=0; $row = $result->fetch(); $i++){
 			?>
@@ -131,9 +134,8 @@ echo 'Contact  '.$rowas['contact_person'].'<br>';
 			<th colspan="1" style="border-top:1px solid #999999">  
 				 
 			<?php
-				$tftft=$_GET['cname'];
-				
-				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE name LIKE '%".$tftft."%' ORDER BY `date2`");
+								
+				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE name LIKE '%".$supplier."%' ORDER BY `date2`");
 				
 				$results->execute();
 				for($i=0; $rows = $results->fetch(); $i++){
@@ -153,16 +155,9 @@ echo 'Contact  '.$rowas['contact_person'].'<br>';
 			<th colspan="1" style="border-top:1px solid #999999">  
 				 
 			<?php
-				$tftft=$_GET['cname'];
-				$c='credit';
 				
-				$results = $db->prepare("SELECT sum(amount) FROM purchases2 WHERE type LIKE '%".$c."%' AND name LIKE '%".$tftft."%'");
-				
-				$results->execute();
-				for($i=0; $rows = $results->fetch(); $i++){
-				$salec=$rows['sum(amount)'];
 				echo  formatMoney($salec-$payments, true);;
-				}
+				
 				?>
 			</th>
 
