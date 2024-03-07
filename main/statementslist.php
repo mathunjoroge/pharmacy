@@ -54,38 +54,6 @@ function createRandomPassword() {
 $finalcode='INV-'.createRandomPassword();
 ?>
 
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>	
 </head>
 <body>
 <?php include('navfixed.php');?>
@@ -111,7 +79,7 @@ window.onload=startclock;
 <a href="select_customer.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> customer Payment and statement</a>
 <a href="selectsupplier.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> supplier Payment</a>
 <a href="suppstatements.php?term=&nbsp;"><font ><i class="icon-bar-chart icon-2x"></i></font><br>supplier Statements</a>
-<a href="salesreport.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> Sales Report</a>
+<a href="salesreport.php?d1=<?php echo date('m/d/Y'); ?>&d2=<?php echo date('m/d/Y'); ?>"><i class="icon-bar-chart icon-2x"></i><br> Sales Report</a>
 <a href="consumptionlist.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> Consumption Report</a>
 <a href="profit&loss.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> profit and loss</a>
 <a href="customerstatement.php?d1=0&d2=0&term=&nbsp;"><i class="icon-bar-chart icon-2x"></i><br> customer statements</a>

@@ -63,16 +63,10 @@ supplier Ledger
 </div>
 <?php
 include('../connect.php');
-$tftft=$_GET['cname'];
-$resulta = $db->prepare("SELECT * FROM supliers WHERE suplier_name= :a");
-$resulta->bindParam(':a', $tftft);
-$resulta->execute();
-for($i=0; $rowa = $resulta->fetch(); $i++){
-$name=$rowa['suplier_name'];
+$supplier=$_GET['cname'];
 
-}
-$resultas = $db->prepare("SELECT * FROM supliers WHERE suplier_name= :b");
-$resultas->bindParam(':b', $name);
+$resultas = $db->prepare("SELECT * FROM supliers WHERE suplier_id= :b");
+$resultas->bindParam(':b', $supplier);
 $resultas->execute();
 for($i=0; $rowas = $resultas->fetch(); $i++){
 echo 'Name : '.$rowas['suplier_name'].'<br>';
@@ -93,20 +87,12 @@ echo 'Contact  '.$rowas['contact_person'].'<br>';
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="record">
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
 		
 			
-			<td><strong><?php echo $rowa['amount2']; ?></strong></td>
-			
-			</tr>
-			
 			<?php
-				$tftft=$_GET['cname'];
-				$result = $db->prepare("SELECT * FROM Payments WHERE name= :userid ORDER BY paymentid DESC Limit 10");
-				$result->bindParam(':userid', $tftft);
+				$supplier=$_GET['cname'];
+				$result = $db->prepare("SELECT * FROM payments WHERE name= :userid ORDER BY paymentid DESC Limit 10");
+				$result->bindParam(':userid', $supplier);
 				$result->execute();
 				for($i=0; $row = $result->fetch(); $i++){
 			?>

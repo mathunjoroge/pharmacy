@@ -1,5 +1,7 @@
 <?php
 require_once('auth.php');
+include('../connect.php');
+	
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -37,7 +39,13 @@ function Clickheretoprint()
   
   var docprint=window.open("","",disp_setting); 
    docprint.document.open(); 
-   docprint.document.write('</head><h4 align="center">Winsor Pharmacy</h4><body align="center" onLoad="self.print()" style="width: 700px; font-size:11px; font-family:arial; font-weight:normal;">');          
+   docprint.document.write('</head><h4 align="center"><?php
+		
+	$result = $db->prepare("SELECT *  FROM pharmacy_details");
+	$result->execute();
+	for($i=0; $row = $result->fetch(); $i++){
+echo $row['pharmacy_name']; }
+?></h4><body align="center" onLoad="self.print()" style="width: 700px; font-size:11px; font-family:arial; font-weight:normal;">');          
    docprint.document.write(content_vlue); 
    docprint.document.close(); 
    docprint.focus(); 
@@ -66,7 +74,9 @@ function createRandomPassword() {
 $finalcode='INV-'.createRandomPassword();
 ?>
 <body>
-<?php include('navfixed.php');?>
+<?php include('navfixed.php');
+
+?>
 <div class="container">
       
 	
@@ -84,19 +94,16 @@ $finalcode='INV-'.createRandomPassword();
 
 </div>
 <form action="salesreport.php" method="get">
-<center><strong>From : <input type="text" style="width: 223px; padding:14px;" name="d1" class="tcal" value="" /> To: <input type="text" style="width: 223px; padding:14px;" name="d2" class="tcal" value="" />
+<center><strong>From : <input type="text" style="width: 223px; padding:14px;" name="d1" class="tcal" autocomplete="off" /> To: <input type="text" style="width: 223px; padding:14px;" name="d2" class="tcal" autocomplete="off"/>
  <button class="btn btn-info" style="width: 123px; height:35px; margin-top:-8px;margin-left:8px;" type="submit"><i class="icon icon-search icon-large"></i> Search</button>
 </strong></center>
 </form>
 <div class="content" id="content">
 <div style="font-weight:bold; text-align:center;font-size:14px;margin-bottom: 15px;">
-cash summary from&nbsp;<?php $date = $_GET['d1'] ;
-                $d11 = strtotime ( $date ) ;
-                $d11 = date ( 'j/m/Y' , $d11 );
-                echo $d11; ?>&nbsp;to&nbsp;<?php $date = $_GET['d2'] ;
-                $d112 = strtotime ( $date ) ;
-                $d112 = date ( 'j/m/Y' , $d112 );
-                echo $d112;  ?>
+cash summary from&nbsp;<?php
+      $d1=date("d/m/Y",strtotime($_GET['d1']));
+	    $d2=date("d/m/Y",strtotime($_GET['d2']));  
+                echo $d1; ?>&nbsp;to&nbsp;<?php  echo $d2;  ?>
 </div>
 <table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
 	<thead>
@@ -112,10 +119,9 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 	<tbody>
 		
 			<?php
-				include('../connect.php');
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
-				$result = $db->prepare("SELECT *  FROM sales WHERE date >= :a AND date<=:b ORDER by transaction_id DESC ");
+				
+			
+				$result = $db->prepare("SELECT *  FROM sales WHERE date >= :a AND date<=:b ORDER by transaction_id DESC");
 				$result->bindParam(':a', $d1);
 				$result->bindParam(':b', $d2);
 				$result->execute();
@@ -180,8 +186,6 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<?php
 			$c='cash';
 				$d='paid';
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
 				$results = $db->prepare("SELECT sum(amount) FROM sales WHERE type=:c  AND date BETWEEN :a AND :b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
@@ -199,8 +203,6 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<?php 
 				$c='cash';
 				$d='paid';
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
 				$results = $db->prepare("SELECT sum(profit) FROM sales WHERE type=:c  AND date>=:a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
@@ -219,9 +221,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<th colspan="2" style="border-top:1px solid #999999"> Total cash payments by customers: </th>
 			<th colspan="1" style="border-top:1px solid #999999"> 
 			<?php
-				
-			$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
+			
 				$results = $db->prepare("SELECT sum(amount2) FROM collection WHERE date2>= :a AND date2<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
@@ -245,9 +245,6 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<th colspan="2" style="border-top:1px solid #999999"> Total paid to suppliers: </th>
 			<th colspan="1" style="border-top:1px solid #999999"> 
 			<?php
-			
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
 				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE date2>= :a AND date2<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
@@ -267,16 +264,15 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<th colspan="2" style="border-top:1px solid #999999"> Total salaries paid: </th>
 			<th colspan="1" style="border-top:1px solid #999999"> 
 			<?php
-			
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
-				$results = $db->prepare("SELECT sum(amount) FROM salaries WHERE date >= :a AND date<=:b");
+			$d1=date("d/m/Y",strtotime($_GET['d1']));
+	    $d2=date("d/m/Y",strtotime($_GET['d2']));
+				$results = $db->prepare("SELECT sum(amount) AS salaries FROM salaries WHERE date >= :a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
 				$results->execute();
 				for($i=0; $rows = $results->fetch(); $i++){
-				$salo=$rows['sum(amount)'];
-				echo formatMoney($salo, true);
+				$salaries=$rows['salaries'];
+				echo formatMoney($salaries, true);
 				}
 				?>
 			</th>
@@ -290,8 +286,6 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 			<th colspan="1" style="border-top:1px solid #999999"> 
 			<?php
 			
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
 				$results = $db->prepare("SELECT sum(amount) FROM expenses WHERE date >=:a AND date<=:b");
 				$results->bindParam(':a', $d1);
 				$results->bindParam(':b', $d2);
@@ -308,7 +302,7 @@ cash summary from&nbsp;<?php $date = $_GET['d1'] ;
 				</th>
 		</tr>
 		<tr><?php $tcash=$cashs+$paymentsc;
-		$cashout=$payments+$salo+$exp;
+		$cashout=$payments+$salaries+$exp;
 		$tcashav=$tcash-$cashout;
 		 ?>
 			<th colspan="2" style="border-top:1px solid #999999"> Total cash available: </th>
