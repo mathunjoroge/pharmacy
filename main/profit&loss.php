@@ -93,7 +93,7 @@ $finalcode='INV-'.createRandomPassword();
 
 </div>
 <form action="profit&loss.php" method="get">
-<center><strong>From : <input type="text" style="width: 223px; padding:14px;" name="d1" class="tcal" value="" /> To: <input type="text" style="width: 223px; padding:14px;" name="d2" class="tcal" value="" />
+<center><strong>From : <input type="text"  name="d1" class="tcal" value="" /> To: <input type="text"  name="d2" class="tcal" value="" />
  <button class="btn btn-success" style="width: 123px; height:35px; margin-top:-8px;margin-left:8px;" type="submit"><i class="icon icon-search icon-large"></i> submit</button>
 </strong></center>
 </form><div id="content">

@@ -76,7 +76,7 @@ function Clickheretoprint()
 	<?php }
    ?>
 </select>			
-	<strong>From : <input type="text" style="width: 223px; padding:14px;" name="d1" class="tcal" autocomplete="off" /> To: <input type="text" style="width: 223px; padding:14px;" name="d2" class="tcal" autocomplete="off"/>
+	<strong>From : <input type="text"  name="d1" class="tcal" autocomplete="off" /> To: <input type="text"  name="d2" class="tcal" autocomplete="off"/>
 	<button class="btn btn-info" style="width: 123px; height:35px; margin-top:-8px;" type="submit"><i class="icon icon-search icon-large"></i> Submit</button>
 </form>
 </div>
