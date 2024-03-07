@@ -1,10 +1,11 @@
 <?php
 	require_once('auth.php');
+	include '../connect.php';
 ?><!DOCTYPE html>
 <html>
 <head>
 <title>
-Pharmacy
+settings
 </title>
  <link href="css/bootstrap.css" rel="stylesheet">
 
@@ -30,7 +31,6 @@ Pharmacy
     })
   })
 </script>
-<
 <?php
 function createRandomPassword() {
 	$chars = "003232303232023232023456789";
@@ -52,39 +52,6 @@ function createRandomPassword() {
 }
 $finalcode='INV-'.createRandomPassword();
 ?>
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>	
 </head>
 <body>
 <?php include('navfixed.php');?>
@@ -100,15 +67,21 @@ window.onload=startclock;
 			
 			</div>
 			
-			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center>Pharmacy</center></font>
+			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center><?php
+$result = $db->prepare("SELECT pharmacy_name  FROM pharmacy_details");
+$result->execute();
+for ($i = 0; ($row = $result->fetch()); $i++) {
+     ?>
+<div id="logo" class="container">
+<div class="container"><?php echo $row["pharmacy_name"]; ?> </div>
+
+<?php
+}
+?>
+</center></font>
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i>Back</button></a>
 
 <div id="mainmain">
-<?php
-  $Today = date('m/d/y',time());
-  $new = date('m/d/20y', strtotime($Today));
-  ?>
-
 
 <a href="retail.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br>retail max disc</a> 
 <a href="wholesale.php"><i class="icon-money icon-2x"></i><br>wholesale max disc</a>      
