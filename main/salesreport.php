@@ -64,7 +64,7 @@ docprint.focus();
 
 <a  href="statementslist.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
 </div>
-<form action="profit&loss.php" method="get">
+<form action="salesreport.php" method="get">
 <center><strong>From : <input type="text"  name="d1" class="tcal" autocomplete="off" /> To: <input type="text"  name="d2" class="tcal"autocomplete="off" />
 <button class="btn btn-success" style="width: 123px; height:35px; margin-top:-8px;margin-left:8px;" type="submit"><i class="icon icon-search icon-large"></i> submit</button>
 </strong></center>
@@ -174,8 +174,6 @@ echo formatMoney($total_exp, true);
 <tbody>
 
 <?php
-
-
 $result = $db->prepare("SELECT sum(amount) AS total_sal,amount,date,employee,amount,rmks FROM salaries WHERE date >= :a AND date<=:b ORDER by id DESC ");
 $result->bindParam(':a', $date1);
 $result->bindParam(':b', $date2);
@@ -219,7 +217,6 @@ $netprofit=$profit-$texp;  ?>
 <thead>
 <tr>
 <th colspan="3" style="border-top:1px solid #999999"> net profit </th>
- 
 
 <?php
 
@@ -235,7 +232,24 @@ echo formatMoney($netprofit, true);
 
 ?>
 </th>
+</tr>
+<th colspan="3" style="border-top:1px solid #999999">cash available</th>
 
+<?php
+$cash_available=($amount-$texp);
+
+if ($netprofit < 1) {
+    $color = "red";
+} else {
+    $color = "green"; 
+}
+?>
+<th colspan="1" style="border-top:1px solid #999999;color: <?php echo $color; ?>">
+<?php
+echo formatMoney($cash_available, true);
+
+?>
+</th>
 </tr>
 </thead>
 </table></div></div></div>
