@@ -58,37 +58,24 @@ $finalcode='INV-'.createRandomPassword();
 </head>
 <body>
 <?php include('navfixed.php');?>
-	
-	
 
-				</ul>                               
-          </div><!--/.well -->
-        </div><!--/span-->
         <div class="container">
 
-	<div class="contentheader">
-			
-			</div>
-			
 			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center>inventory adjustments</center></font>
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i>Back</button></a>
 <div id="mainmain">
 <?php
-  $Today = date('m/d/y',time());
-  $new = date('m/d/20y', strtotime($Today));
+ 
+  $new = date('m/d/Y');
   ?>
 
-
+<div id="cards" class="container">
+	<div class="card">
 <a href="../stocktake/stock_take.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br>stock take</a> 
-
+</div>
+<div class="card">
 <a href="bincard.php?term=&nbsp;&d1=0&d2=0"><i class="icon-dashboard icon-2x"></i><br>inventory tracker</a>      
-     
-   
 
-
-<div class="clearfix"></div>
-</div>
-</div>
 </div>
 </div>
 </body>

@@ -25,4 +25,31 @@ ini_set("display_errors", "On");
         </div>
       </div>
     </div>
-    
+      <style>
+
+    #cards {
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card {
+        width: 300px; /* Adjust the width as needed */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+        background-color: #c5d5f0;
+        text-align: center;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card:hover {
+        background-color: #f0f0f0;
+    }
+
+    .card a {
+        color: inherit; /* Inherit text color */
+    }
+</style>

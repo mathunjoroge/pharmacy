@@ -33,21 +33,6 @@ require_once('auth.php');
 
 <link rel="stylesheet" type="text/css" href="tcal.css" />
 <script type="text/javascript" src="tcal.js"></script>
-<script language="javascript">
-function Clickheretoprint()
-{ 
-  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-      disp_setting+="scrollbars=yes,width=700, height=400, left=100, top=25"; 
-  var content_vlue = document.getElementById("content").innerHTML; 
-  
-  var docprint=window.open("","",disp_setting); 
-   docprint.document.open(); 
-   docprint.document.write('</head><body onLoad="self.print()" style="width: 700px; font-size:11px; font-family:arial; font-weight:normal;">');          
-   docprint.document.write(content_vlue); 
-   docprint.document.close(); 
-   docprint.focus(); 
-}
-</script>
 
 <script type="text/javascript">
   jQuery(document).ready(function($) {
@@ -79,82 +64,30 @@ function createRandomPassword() {
 }
 $finalcode='RS-'.createRandomPassword();
 ?>
-
-
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>	
-
 <body>
 <?php include('navfixed.php');?>
 <!--/span-->
 	<div class="container">
-	<div class="contentheader">
+	
 			<i class="icon-bar-chart"></i> sales Inventory
-			</div>
-<br>
+		
+
 
 <a  href="admin.php"><button class="btn btn-success" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
-	
-<br>
-<br>
-<br>
-
-<br/>
-<br/>
-<div id="dvData">
-
-</div>
-
 
 <input type="text" style="padding:15px;" name="filter" value="" id="filter" placeholder="enter invoice number" autocomplete="on" />
-<div class="content" id="content">
-<br><br><br>
+
 <center><strong>sales Inventory</strong></center>
 <table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
 	<thead>
 		<tr>
-			<th width="12%"> Invoice </th>
-			<th width="9%"> Date </th>
-			<th width="14%"> Brand Name </th>
-			<th width="16%"> Generic Name </th>
-			<th width="15%"> Category / Description </th>
+			<th > Invoice </th>
+			<th > Date </th>
+			<th > Brand Name </th>
+			<th > Generic Name </th>
 			<th > Price </th>
-			<th> QTY </th>
-
-			
-			
-
+			<th> qty</th>		
+<th >amount </th>
 			<th > Action </th>
 		</tr>
 	</thead>
@@ -186,7 +119,7 @@ window.onload=startclock;
 else{
 	$id=1;
 }
-				$result = $db->prepare("SELECT * FROM sales_order LIMIT $start, $limit");
+				$result = $db->prepare("SELECT transaction_id,gen_name,product_code,invoice, products.price AS price,sales_order.qty AS qty,sales_order.date AS date,sales_order.amount AS amount FROM sales_order JOIN products ON products.product_id=sales_order.product LIMIT $start, $limit");
 				$result->execute();
 				for($i=0; $row = $result->fetch(); $i++){
 			?>
@@ -195,7 +128,7 @@ else{
 			<td><?php echo $row['date']; ?></td>
 			<td><?php echo $row['product_code']; ?></td>
 			<td><?php echo $row['gen_name']; ?></td>
-			<td><?php echo $row['name']; ?></td>
+			
 			<td><?php
 			$price=$row['price'];
 			echo formatMoney($price, true);
@@ -203,7 +136,7 @@ else{
 						<td><?php echo $row['qty']; ?></td>
 			<td><?php
 			$oprice=$row['amount'];
-			echo formatMoney($oprice, true);
+			echo formatMoney($price, true);
 			?></td>
 				
 			<td> 				
@@ -212,45 +145,11 @@ else{
 			<?php
 				}
 			?>
-		
 				
-			
-			<tr>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				
-				<th></th>
-			<tr>
-				
-			<tr>
-				<th colspan="7"><strong style="font-size: 20px; color: #222222;">Total:</strong></th>
-				<th colspan="1"><strong style="font-size: 13px; color: #222222;">
-				<?php
-				$resultas = $db->prepare("SELECT sum(amount) from sales_order");
-				$resultas->bindParam(':a', $sdsd);
-				$resultas->execute();
-				for($i=0; $rowas = $resultas->fetch(); $i++){
-				$fgfg=$rowas['sum(amount)'];
-				echo formatMoney($fgfg, true);
-				}
-				?>
-				</strong>
-					
-					<th></th>
-			</tr>		
 	</tbody>
 </table>
 <?php
 
-			
-
-			include('../connect.php');
 				$result = $db->prepare("SELECT * FROM sales_order   ORDER BY transaction_id DESC");
 				$result->execute();
 				$rowcount123 = $result->rowcount();

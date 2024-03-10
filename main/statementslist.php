@@ -57,37 +57,40 @@ $finalcode='INV-'.createRandomPassword();
 </head>
 <body>
 <?php include('navfixed.php');?>
-	
-	
 
-				</ul>                               
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="container"><p>&nbsp;</p>
-        	<div style="margin-top: 3%; margin-bottom: 21px;">
+ <div class="container">
 <a  href="admin.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
 
-			
-
-	<div class="contentheader">
-			
-			</div>
-			
-			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center>statements</center></font>
-<div id="mainmain">
+<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center>statements</center></font>
+<div class="container" id="cards">
+<div class="card">
 <a href="purchaseslist.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> view Purchase</a>
+</div>
+<div class="card">
 <a href="select_customer.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> customer Payment and statement</a>
+</div>
+<div class="card">
 <a href="selectsupplier.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> supplier Payment</a>
+</div>
+<div class="card">
 <a href="suppstatements.php?term=&nbsp;"><font ><i class="icon-bar-chart icon-2x"></i></font><br>supplier Statements</a>
+</div>
+<div class="card">
 <a href="salesreport.php?d1=<?php echo date('m/d/Y'); ?>&d2=<?php echo date('m/d/Y'); ?>"><i class="icon-bar-chart icon-2x"></i><br> Sales Report</a>
+</div>
+<div class="card">
 <a href="consumptionlist.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> Consumption Report</a>
+</div>
+<div class="card">
 <a href="profit&loss.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> profit and loss</a>
+</div>
+<div class="card">
 <a href="customerstatement.php?d1=0&d2=0&term=&nbsp;"><i class="icon-bar-chart icon-2x"></i><br> customer statements</a>
+</div>
+<div class="card">
 <a href="selectsupplier2.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> supplier balance</a>
+</div>
 
-<div class="clearfix"></div>
-</div>
-</div>
 </div>
 </div>
 </body>

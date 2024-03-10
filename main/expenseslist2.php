@@ -14,12 +14,7 @@ Pharmacy
     <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
   
   <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-    
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
+   
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
@@ -32,7 +27,19 @@ Pharmacy
       closeImage   : 'src/closelabel.png'
     })
   })
-</script>
+</script><style type="text/css">
+    #card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 400px!important; /* Adjust width as needed */
+  margin: 10px!important;
+  text-align: center;
+}
+</style>
 
 <?php
 function createRandomPassword() {
@@ -55,79 +62,40 @@ function createRandomPassword() {
 }
 $finalcode='INV-'.createRandomPassword();
 ?>
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>	
 </head>
 <body>
 <?php include('navfixed.php');?>
-	
-	
+	       <div class="container">
 
-				</ul>                               
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="container"><p>&nbsp;</p>
         	<div style="margin-top: 3%; margin-bottom: 21px;">
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
-
-			
-
-	<div class="contentheader">
-			
-			</div>
+	
 			
 			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center>salaries and expenses</center></font>
-<div id="mainmain">
-
-
-
-
-<a href="expenses.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> expenses</a> 
-<a href="explist.php"><font ><i class="icon-shopping-cart icon-2x"></i></font><br> expenses list</a>
-
-
-
-
-<a href="salaries.php"><i class="icon-bar-chart icon-2x"></i><br> pay salary</a>
-<a href="employees.php"><i class="icon-bar-chart icon-2x"></i><br> employees</a>
-
-
-<div class="clearfix"></div>
+			<div class="container" id="card">
+    <div class="card">
+        <a href="employees.php">
+            <i class="icon-bar-chart icon-2x"></i><br>Employees
+        </a>
+    </div>
+    <div class="card">
+        <a href="salaries.php">
+            <i class="icon-bar-chart icon-2x"></i><br>Pay Salary
+        </a>
+    </div>
+    <div class="card">
+        <a href="expenses.php">
+            <i class="icon-shopping-cart icon-2x"></i><br>Expenses
+        </a>
+    </div>
+    <div class="card">
+        <a href="explist.php">
+            <i class="icon-shopping-cart icon-2x"></i><br>Expenses List
+        </a>
+    </div>
 </div>
-</div>
-</div>
-</div>
+
+
 </body>
 <?php include('footer.php'); ?>
 </html>
