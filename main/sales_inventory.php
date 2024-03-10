@@ -1,11 +1,26 @@
 <html>
 <head>
 <title>
-POS
+delete sales
 </title>
 
 <?php 
 require_once('auth.php');
+function formatMoney($number, $fractional=false) {
+					if ($fractional) {
+						$number = sprintf('%.2f', $number);
+					}
+					while (true) {
+						$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
+						if ($replaced != $number) {
+							$number = $replaced;
+						} else {
+							break;
+						}
+					}
+					return $number;
+				}
+				include('../connect.php');
 ?>
  <link href="css/bootstrap.css" rel="stylesheet">
 
@@ -68,16 +83,27 @@ $finalcode='RS-'.createRandomPassword();
 <?php include('navfixed.php');?>
 <!--/span-->
 	<div class="container">
-	
-			<i class="icon-bar-chart"></i> sales Inventory
+	<div class="container">
+		<p>&nbsp;</p>
+			<p><i class="icon-bar-chart"></i> delete sales</p>
+			<a  href="admin.php"><button class="btn btn-success" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
 		
+</div></br>
+<div class="container" align="center">
+	<form action="sales_inventory.php" method="GET">
+<strong>From : <input type="text" name="d1" class="tcal" autocomplete="off" /> To: <input type="text"  name="d2" class="tcal" autocomplete="off" />
+<Button type="submit" class="btn btn-info"  /><i class="icon-plus-sign icon-large" ></i>submit</button>
+</form>
+</div>
+<?php
+if (isset($_GET['d1'])) {
+	$d1=$_GET['d1'];
+	$d2=$_GET['d2'];
+?>
+<div class="container" align="center"> showing sales receipts from: <?php echo date('d-M-Y',strtotime($_GET['d1'])) ;?> to: <?php echo date('d-M-Y',strtotime($_GET['d2'])) ;?></div></br>
+<input type="text" style="padding:15px;" name="filter" value="" id="filter" placeholder="enter receipt number" autocomplete="on" /></br>
 
 
-<a  href="admin.php"><button class="btn btn-success" style="float: left;"><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
-
-<input type="text" style="padding:15px;" name="filter" value="" id="filter" placeholder="enter invoice number" autocomplete="on" />
-
-<center><strong>sales Inventory</strong></center>
 <table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
 	<thead>
 		<tr>
@@ -94,23 +120,8 @@ $finalcode='RS-'.createRandomPassword();
 	<tbody>
 		
 			<?php
-			function formatMoney($number, $fractional=false) {
-					if ($fractional) {
-						$number = sprintf('%.2f', $number);
-					}
-					while (true) {
-						$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-						if ($replaced != $number) {
-							$number = $replaced;
-						} else {
-							break;
-						}
-					}
-					return $number;
-				}
-				include('../connect.php');
-				$start=0;
-				$limit=10;
+			
+			
 				if(isset($_GET['id']))
 {
 	$id=$_GET['id'];
@@ -119,7 +130,10 @@ $finalcode='RS-'.createRandomPassword();
 else{
 	$id=1;
 }
-				$result = $db->prepare("SELECT transaction_id,gen_name,product_code,invoice, products.price AS price,sales_order.qty AS qty,sales_order.date AS date,sales_order.amount AS amount FROM sales_order JOIN products ON products.product_id=sales_order.product LIMIT $start, $limit");
+				$result = $db->prepare("SELECT transaction_id,gen_name,product_code,invoice, products.price AS price,sales_order.qty AS qty,sales_order.date AS date,sales_order.amount AS amount FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE  sales_order.date >=:a AND sales_order.date<=:b");
+
+$result->bindParam(':a', $d1);
+$result->bindParam(':b', $d2);
 				$result->execute();
 				for($i=0; $row = $result->fetch(); $i++){
 			?>
@@ -137,10 +151,14 @@ else{
 			<td><?php
 			$oprice=$row['amount'];
 			echo formatMoney($price, true);
-			?></td>
-				
-			<td> 				
-			<a href="deletesalesinventory.php?id=<?php echo $row['transaction_id']; ?>&qty=<?php echo $row['qty'];?>"><button class="btn btn-mini btn-danger"><i class="icon icon-trash"></i> Delete </button></a>
+			?></td>				
+			<td> 
+
+    <button class="delbutton btn btn-mini btn-danger" data-id="<?php echo $row['transaction_id']; ?>">
+        <i class="icon icon-trash"></i> Delete
+    </button>
+</td>
+
 			</tr>
 			<?php
 				}
@@ -148,82 +166,59 @@ else{
 				
 	</tbody>
 </table>
-<?php
-
-				$result = $db->prepare("SELECT * FROM sales_order   ORDER BY transaction_id DESC");
-				$result->execute();
-				$rowcount123 = $result->rowcount();
-
-			
-//calculate total page number for the given table in the database 
-$total=ceil($rowcount123/$limit); ?>
-<ul >
-<?php if($id>1)
-{
-	//Go to previous page to show previous 10 items. If its in page 1 then it is inactive
-	echo "<button class='btn btn-primary'><a href='?id=".($id-1)."' class='button'>PREVIOUS</a></button>";
-}
-if($id!=$total)
-{
-	////Go to previous page to show next 10 items.
-	echo "<button class='btn btn-primary'><a href='?id=".($id+1)."' class='button'>NEXT</a></button>";
-}
-?>
 
 <?php
-//show all the page link with page number. When click on these numbers go to particular page. 
-		for($i=1;$i<=$total;$i++)
-		{
-			if($i==$id) { echo "<button class='active'><span class='current'>".$i."</button>"; }
-			
-			else { echo "<button class='btn btn-primary'><a href='?id=".$i."'>".$i."</a></button>"; }
-		}
+
+	}
 ?>
-<div style="float:right;">		
-<button  style="float:left;" class="btn btn-success"><a href="javascript:Clickheretoprint()"> Print</button></a>
-</div>
 <div class="clearfix"></div>
 </div>
 </div>
 </div>
 </div>
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var delButtons = document.querySelectorAll(".delbutton");
 
-<script src="js/jquery.js"></script>
-  <script type="text/javascript">
-$(function() {
+        delButtons.forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                var delButton = event.currentTarget;
+                var del_id = delButton.getAttribute("data-id");
 
+                // Debugging: Log the transaction ID
+                console.log("Transaction ID to delete: " + del_id);
 
-$(".delbutton").click(function(){
+                var info = 'id=' + del_id;
 
-//Save the link in a variable called element
-var element = $(this);
-
-//Find the id of the link that was clicked
-var del_id = element.attr("id");
-
-//Built a url to send
-var info = 'id=' + del_id;
- if(confirm("Sure you want to delete this update? There is NO undo!"))
-		  {
-
- $.ajax({
-   type: "GET",
-   url: "deletesalesinventory.php",
-   data: info,
-   success: function(){
-   
-   }
- });
-         $(this).parents(".record").animate({ backgroundColor: "#fbc7c7" }, "fast")
-		.animate({ opacity: "hide" }, "slow");
-
- }
-
-return false;
-
-});
-
-});
+                if (confirm("Are you sure you want to delete this entry? This action cannot be undone!")) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "deletesalesinventory.php", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            var response = xhr.responseText;
+                            if (response.trim() === "success") {
+                                var row = delButton.closest("tr");
+                                // Add fade-out effect
+                                row.style.transition = "opacity 0.5s ease";
+                                row.style.opacity = "0";
+                                // Hide the row after the fade-out effect
+                                setTimeout(function() {
+                                    row.style.display = "none";
+                                }, 500); // Adjust the delay according to the transition duration
+                                // Reload the page after successful deletion
+                                 location.reload();  // <- Commented out for testing
+                            } else {
+                                console.error("Error deleting entry.");
+                            }
+                        }
+                    };
+                    xhr.send(info);
+                }
+                return false;
+            });
+        });
+    });
 </script>
 </body>
 <?php include('footer.php');?>

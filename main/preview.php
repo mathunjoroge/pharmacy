@@ -18,11 +18,30 @@ function formatMoney($number, $fractional = false)
     return $number;
 }
 ?>
+<?php
+function createRandomPassword() {
+$chars = "003232303232023232023456789";
+srand((double)microtime()*1000000);
+$i = 0;
+$pass = '' ;
+while ($i <= 7) {
+
+$num = rand() % 33;
+
+$tmp = substr($chars, $num, 1);
+
+$pass = $pass . $tmp;
+
+$i++;
+
+}
+return $pass;
+}
+$finalcode='INV-'.createRandomPassword();
+?>
 <title>
-Preview Invoice
+Preview receipt
 </title>
-
-
 <style type="text/css">
     @media print {
 #content{
@@ -54,9 +73,7 @@ Preview Invoice
 
 <body>
 <?php include "navfixed.php";  ?>
-<div>&nbsp;</div>
-<div>&nbsp;</div>
-<div>&nbsp;</div>
+<div class="container"><a href="sales.php?id=cash&invoice=<?php echo $finalcode; ?>"><button class="btn btn-primary">new sale</button></a></div>
 <div  id="content">
 <div class="container">
 <center>
