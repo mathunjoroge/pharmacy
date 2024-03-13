@@ -10,7 +10,6 @@ include '../connect.php';
 $result = $db->prepare("SELECT * FROM products where qty < level ORDER BY product_id DESC");
 $result->execute();
 $rowcount123 = $result->rowcount();
-
 ?>
 <html>
 <head>
@@ -44,10 +43,6 @@ Dispense
 	  <script src="vendors/jquery-1.7.2.min.js"></script>
     <script src="vendors/bootstrap.js"></script>
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-
-
-
 </head>
 <?php
 function createRandomPassword() {
@@ -84,8 +79,6 @@ if ($position == 'cashier') {
 if ($position == 'admin' || 'cashier') {
 	?>
 
-
-
 <?php }?>
 <div class="container">
 			<i class="icon-money"></i> Sales
@@ -98,13 +91,9 @@ if ($position == 'admin' || 'cashier') {
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
 </div><div style="text-align:center;">
 			<font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';"><?php echo $rowcount123; ?></font><a rel="facebox" href="level.php">  <button class="btn btn-primary">Low running products</button></a>
-			</div>
-</div>
+			</div></br>
 <div class="container">
-
 <form action="incoming.php" method="post" >
-
-
 <input type="hidden" name="pt" value="<?php echo $_GET['id']; ?>" />
 <input type="hidden" name="invoice" value="<?php echo $_GET['invoice']; ?>" />
       <select autofocus name="product" style="width:430px;font-size:0.8em;" class="chzn-select" id="mySelect">
@@ -120,7 +109,6 @@ $result->execute();
     </option>
 <?php endfor;?>
 </select>
-
 <span id="price" contenteditable="true" name="price"></span>
 <script>
 $('#mySelect').on('change', function (event) {
@@ -143,8 +131,8 @@ document.getElementById('disc').max =discountmax;
 </script>
 <input type="hidden" name="batch"  placeholder="batch" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;">
 <input type="number" name="quantity" min="1" max="" placeholder="qty" id="qtyy" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" required>
-<input  name="qty" min="1" placeholder="in stock" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" readonly />
-<input  name="exp" placeholder="expiry" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" readonly />
+<input  name="qty" min="1" placeholder="in stock" autocomplete="off" style="width:5rem; height:auto; padding-top:auto; padding-bottom: 4px; margin-right: 4px; font-size:15px;" readonly />
+<input  name="exp" placeholder="expiry" autocomplete="off" style="width: 68px; height:auto; " readonly />
 <input type="number" name="pr" min="1" placeholder="price" id="fpr" step=".00001" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;">
 
 <input type="hidden" name="pc" max="" placeholder="disc" id="disc" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" />
@@ -256,11 +244,8 @@ for ($i = 0; $row = $result->fetch(); $i++) {
 	</tbody>
 </table><br>
 <a rel="facebox" href="checkout.php?pt=<?php echo $_GET['id'] ?>&invoice=<?php echo $_GET['invoice'] ?>&total=<?php echo $total ?>&totalprof=<?php echo $profit ?>&cashier=<?php echo $_SESSION['SESS_FIRST_NAME'] ?>"><button class="btn btn-success btn-large btn-block" accesskey="s"><i class="icon icon-save icon-large" accesskey="s"></i> SAVE</button></a>
-<div class="clearfix"></div>
 </div>
 </div>
-
-
 </body>
 <?php include 'footer.php';?>
 </html>

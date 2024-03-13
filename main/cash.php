@@ -1,6 +1,11 @@
 <?php
 require_once('auth.php');
 include '../connect.php';
+$date1=date('Y-m-d',strtotime($_GET['d1']));
+$date2=date('Y-m-d',strtotime($_GET['d2']));
+$d1=date('Y-m-d',strtotime($_GET['d1']));
+$d2=date('Y-m-d',strtotime($_GET['d2']));
+
 function formatMoney($number, $fractional=false) {
 if ($fractional) {
 $number = sprintf('%.2f', $number);
@@ -85,8 +90,6 @@ $finalcode='INV-'.createRandomPassword();
 
 <div style="margin-top: -19px; margin-bottom: 21px;">
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-home icon-large"></i> Back</button></a>
-
-
 </div>
 
 <form action="cash.php" method="get">
@@ -113,8 +116,9 @@ $finalcode='INV-'.createRandomPassword();
 <tr>
 <th colspan="3" style="border-top:1px solid #999999"> Total: </th>
 <th colspan="1" style="border-top:1px solid #999999"> 
+
 <?php
-$results = $db->prepare("SELECT sum(amount) AS amount, sum(profit) AS profit FROM sales WHERE date >= :a AND date<=:b ");
+$results = $db->prepare("SELECT sum(amount) AS amount, sum(profit) AS profit FROM sales WHERE date >= :a AND date<=:b");
 $results->bindParam(':a', $d1);
 $results->bindParam(':b', $d2);
 $results->execute();
@@ -146,19 +150,39 @@ echo formatMoney($profit, true);
 </thead>
 <tbody>
 <?php
-$date1=date('d/m/Y',strtotime($d1));
-$date2=date('d/m/Y',strtotime($d2));
-$result = $db->prepare("SELECT name,recorded,amount,date,sum(amount) AS total_exp FROM expenses WHERE date >= :a AND date<=:b ORDER by id DESC ");
-$result->bindParam(':a', $date1);
-$result->bindParam(':b', $date2);
-$result->execute();
-for($i=0; $row = $result->fetch(); $i++){
-	$amount=$row['amount'];
-	$total_exp=$row['total_exp'];
+// First prepared statement
+$stmt_expenses = $db->prepare("SELECT name, recorded, amount, date
+                               FROM expenses
+                               WHERE date >= :a AND date <= :b
+                               ORDER BY id DESC");
+$stmt_expenses->bindParam(':a', $date1);
+$stmt_expenses->bindParam(':b', $date2);
+$stmt_expenses->execute();
+
+// Second prepared statement
+$stmt_total_exp = $db->prepare("SELECT COALESCE(SUM(amount), 0) AS total_exp
+                                FROM expenses
+                                WHERE date >= :a AND date <= :b");
+$stmt_total_exp->bindParam(':a', $date1);
+$stmt_total_exp->bindParam(':b', $date2);
+$stmt_total_exp->execute();
+
+// Fetch the total expense
+$row_total_exp = $stmt_total_exp->fetch();
+$total_exp = $row_total_exp['total_exp'];
+
+// Fetch and process each expense
+while ($row = $stmt_expenses->fetch()) {
+    $amount = $row['amount'];
+    $date = $row['date'];
+    // Process the fetched data here
+    // ...
+
+
 ?>
 <tr class="record">
 <td><?php 
-$date = $row['date'];
+
 echo date('d/m/Y',strtotime($date));
  ?></td>
 <td><?php echo $row['name']; ?></td>
@@ -199,13 +223,27 @@ echo formatMoney($total_exp, true);
 <tbody>
 
 <?php
-$result = $db->prepare("SELECT sum(amount) AS total_sal,amount,date,employee,amount,rmks FROM salaries WHERE date >= :a AND date<=:b ORDER by id DESC ");
-$result->bindParam(':a', $date1);
-$result->bindParam(':b', $date2);
-$result->execute();
-for($i=0; $row = $result->fetch(); $i++){
-	$salary=$row['amount'];
-	$total_salary=$row['total_sal'];
+// First prepared statement
+$stmt_salaries = $db->prepare("SELECT SUM(amount) AS total_sal, amount, date, employee, rmks
+                               FROM salaries
+                               WHERE date >= :a AND date <= :b
+                               ORDER BY id DESC");
+$stmt_salaries->bindParam(':a', $date1);
+$stmt_salaries->bindParam(':b', $date2);
+$stmt_salaries->execute();
+
+// Fetch the total salary
+$row_total_sal = $stmt_salaries->fetch();
+$total_salary = $row_total_sal['total_sal'];
+
+// Fetch and process each salary
+while ($row = $stmt_salaries->fetch()) {
+    $salary = $row['amount'];
+    $date = $row['date'];
+    // Process the fetched data here
+    // ...
+
+
 ?>
 <tr class="record">
 <td><?php echo date('d/m/Y',strtotime($row['date']));
@@ -262,7 +300,6 @@ echo formatMoney($netprofit, true);
 
 <?php
 $cash_available=($amount-$texp);
-
 if ($netprofit < 1) {
     $color = "red";
 } else {
