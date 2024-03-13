@@ -12,9 +12,9 @@ $c = $_POST['qty'];
 $w = $_POST['pt'];
 $bn=$_POST['bno'];
 $edate = $_POST['edate'];
-$date = $_POST['date'];
-$result = $db->prepare("SELECT * FROM products WHERE product_id= :userid");
-$result->bindParam(':userid', $b);
+$date =date('Y-m-d');
+$result = $db->prepare("SELECT * FROM products WHERE product_id= :product_id");
+$result->bindParam(':product_id', $b);
 $result->execute();
 for($i=0; $row = $result->fetch(); $i++){
 $asasa=$mn/$c;

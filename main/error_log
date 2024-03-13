@@ -1,0 +1,28 @@
+[13-Mar-2024 00:53:35 America/Chicago] PHP Warning:  Undefined variable $p in /home/healthte/public_html/pharmacy_improved/main/incoming.php on line 34
+[13-Mar-2024 00:53:35 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/healthte/public_html/pharmacy_improved/main/incoming.php:34) in /home/healthte/public_html/pharmacy_improved/main/incoming.php on line 41
+[13-Mar-2024 01:08:22 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 01:08:22 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 01:22:13 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 01:22:13 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 02:10:06 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 02:10:06 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/main/sales.php on line 178
+[13-Mar-2024 02:10:19 America/Chicago] PHP Warning:  Undefined array key "age" in /home/healthte/public_html/pharmacy_improved/main/checkout.php on line 44
+[13-Mar-2024 02:10:19 America/Chicago] PHP Warning:  Undefined array key "sex" in /home/healthte/public_html/pharmacy_improved/main/checkout.php on line 45
+[13-Mar-2024 04:06:07 America/Chicago] PHP Warning:  Undefined variable $db in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 112
+[13-Mar-2024 04:06:07 America/Chicago] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/healthte/public_html/pharmacy_improved/main/cash.php:112
+Stack trace:
+#0 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 112
+[13-Mar-2024 04:06:47 America/Chicago] PHP Warning:  Undefined variable $db in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 112
+[13-Mar-2024 04:06:47 America/Chicago] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/healthte/public_html/pharmacy_improved/main/cash.php:112
+Stack trace:
+#0 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 112
+[13-Mar-2024 04:07:00 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function formatMoney() in /home/healthte/public_html/pharmacy_improved/main/cash.php:110
+Stack trace:
+#0 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 110
+[13-Mar-2024 04:08:43 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function formatMoney() in /home/healthte/public_html/pharmacy_improved/main/cash.php:110
+Stack trace:
+#0 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/main/cash.php on line 110

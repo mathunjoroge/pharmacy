@@ -76,9 +76,9 @@ $finalcode = 'INV-' . createRandomPassword();
 <?php } ?>
         <div class="card">
             <a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>" style="color: green;">
-                <i class="icon-user-md icon-2x"></i><br>
+                <i class="icon-user-md icon-2x"></i></a><br>
                 Sales
-            </a>
+            
         </div>
         <div class="card">
             <a href="products.php">

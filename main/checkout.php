@@ -6,36 +6,12 @@
 	?>
 <head>
 <title>Checkout</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js"></script>
-<script>
-function suggest(inputString){
-		if(inputString.length == 0) {
-			$('#suggestions').fadeOut();
-		} else {
-		$('#country').addClass('load');
-			$.post("autosuggestname.php", {queryString: ""+inputString+""}, function(data){
-				if(data.length >0) {
-					$('#suggestions').fadeIn();
-					$('#suggestionsList').html(data);
-					$('#country').removeClass('load');
-				}
-			});
-		}
-	}
 
-	function fill(thisValue) {
-		$('#country').val(thisValue);
-		setTimeout("$('#suggestions').fadeOut();", 600);
-	}
-
-</script>
-	
 </head>
 <body onLoad="document.getElementById('country').focus();">
 <form action="savesales.php" method="post">
 <div id="ac">
 <center><h4><i class="icon icon-money icon-large"></i> Cash</h4></center><hr>
-<input type="hidden" name="date" value="<?php echo $new; ?>" />
 <input type="hidden" name="invoice" value="<?php echo $_GET['invoice']; ?>" />
 <input type="hidden" name="amount" value="<?php echo $_GET['total']; ?>" />
 <input type="hidden" name="ptype" value="<?php echo $_GET['pt']; ?>" />

@@ -36,16 +36,7 @@ Dispense
     <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
 
   <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-
-    </style>
+   
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 
 	<!-- combosearch box-->
@@ -96,19 +87,16 @@ if ($position == 'admin' || 'cashier') {
 
 
 <?php }?>
-          </div><!--/.well -->
-        </div>
-        <div class="container">
-		<div class="contentheader">
+<div class="container">
 			<i class="icon-money"></i> Sales
-			</div>
 			<ul class="breadcrumb">
 			<a href="index.php"><li>Dashboard</li></a> /
 			<li class="active">Sales</li>
 			</ul>
-<div style="margin-top: -19px; margin-bottom: 21px;">
+			</div>
+<div class="container">
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
-</div>	<div style="text-align:center;">
+</div><div style="text-align:center;">
 			<font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';"><?php echo $rowcount123; ?></font><a rel="facebox" href="level.php">  <button class="btn btn-primary">Low running products</button></a>
 			</div>
 </div>
