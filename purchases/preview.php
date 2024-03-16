@@ -10,12 +10,7 @@ Preview Invoice
     <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
   
   <link rel="stylesheet" href="../main/css/font-awesome.min.css">
-    <style type="text/css">
-    
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
+   
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
@@ -27,10 +22,9 @@ function Clickheretoprint()
   var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
       disp_setting+="scrollbars=yes,width=800, height=400, left=100, top=25"; 
   var content_vlue = document.getElementById("content").innerHTML; 
-  
   var docprint=window.open("","",disp_setting); 
    docprint.document.open(); 
-   docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');          
+   docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');  
    docprint.document.write(content_vlue); 
    docprint.document.close(); 
    docprint.focus(); 
@@ -79,10 +73,10 @@ function createRandomPassword() {
 $finalcode='INV-'.createRandomPassword();
 ?>
 <body style="text-transform:capitalize;">
-
-<?php include('../main/navfixed.php');?>		
-<a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-primary"><i class="icon-arrow-left"></i> record another purchase</button></a>&nbsp;&nbsp;	<a href="..//main/index.php"><button class="btn btn-primary"><i class="icon-arrow-left"></i> Go to sales</button></a>
-
+<?php include('../main/navfixed.php');?>
+<div class="container">		
+<a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-primary"><i class="icon-arrow-left"></i> record another purchase</button></a>&nbsp;&nbsp;	<a href="../main/index.php"><button class="btn btn-primary"><i class="icon-arrow-left"></i> Go to sales</button></a>
+</div>
 <div class="container" id="content">
 	<center>
 		<?php

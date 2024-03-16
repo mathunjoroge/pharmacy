@@ -1,0 +1,5 @@
+[16-Mar-2024 13:46:45 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/purchases/sales.php on line 161
+[16-Mar-2024 13:47:05 America/Chicago] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home/healthte/public_html/pharmacy_improved/purchases/auth.php on line 3
+[16-Mar-2024 13:47:05 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/healthte/public_html/pharmacy_improved/purchases/preview.php:1) in /home/healthte/public_html/pharmacy_improved/purchases/auth.php on line 7
+[16-Mar-2024 13:47:12 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/purchases/sales.php on line 161
+[16-Mar-2024 13:47:15 America/Chicago] PHP Warning:  Undefined array key "product" in /home/healthte/public_html/pharmacy_improved/purchases/sales.php on line 161

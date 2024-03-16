@@ -1,0 +1,10 @@
+[15-Mar-2024 02:46:52 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function get_magic_quotes_gpc() in /home/healthte/public_html/pharmacy_improved/login.php:11
+Stack trace:
+#0 /home/healthte/public_html/pharmacy_improved/login.php(18): clean('admin')
+#1 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/login.php on line 11
+[15-Mar-2024 02:50:24 America/Chicago] PHP Fatal error:  Uncaught Error: Call to undefined function get_magic_quotes_gpc() in /home/healthte/public_html/pharmacy_improved/login.php:12
+Stack trace:
+#0 /home/healthte/public_html/pharmacy_improved/login.php(19): clean('admin')
+#1 {main}
+  thrown in /home/healthte/public_html/pharmacy_improved/login.php on line 12
