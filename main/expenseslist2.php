@@ -1,33 +1,12 @@
 <?php
-require_once('auth.php');
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title='salaries and expenses';
+include('../main/navfixed.php');
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<html>
-<head>
-<title>
-Pharmacy
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-   
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script><style type="text/css">
+<style type="text/css">
     #card {
   display: flex;
   flex-wrap: wrap;
@@ -41,30 +20,7 @@ Pharmacy
 }
 </style>
 
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
 
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-</head>
-<body>
-<?php include('navfixed.php');?>
 	       <div class="container">
 
         	<div style="margin-top: 3%; margin-bottom: 21px;">
@@ -96,6 +52,6 @@ $finalcode='INV-'.createRandomPassword();
 </div>
 
 
-</body>
 <?php include('footer.php'); ?>
+</body>
 </html>
