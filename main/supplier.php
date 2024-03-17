@@ -1,68 +1,17 @@
 <?php
-	require_once('auth.php');
+ini_set("display_errors", "On");
+require_once('auth.php');
+include('../connect.php');
+$title='suppliers';
+include('../main/navfixed.php');
+
 ?>
-<html>
-<head>
-<title>
-Suppliers
-</title>
 
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-   
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-<script src="jeffartagame.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/application.js" type="text/javascript" charset="utf-8"></script>
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
-</head>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body>
-<?php include('navfixed.php');?>
 <div class="container-fluid">
-      <div class="row-fluid">             
-		    
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="container">
-	<div class="contentheader">
+      
+
 			<i class="icon-group"></i> Suppliers
-			</div>
+	
 			<ul class="breadcrumb">
 			<li><a href="index.php">Dashboard</a></li> /
 			<li class="active">Suppliers</li>

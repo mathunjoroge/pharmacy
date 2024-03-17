@@ -1,71 +1,21 @@
 <?php
+ini_set("display_errors", "On");
 require_once('auth.php');
+include('../connect.php');
+$title='record sales';
+include('../main/navfixed.php');
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-
 	<?php
-include '../connect.php';
+if (!isset($_GET['invoice'])) {
+    $finalcode = generateRandomPassword();
+}
+
 $result = $db->prepare("SELECT * FROM products where qty < level ORDER BY product_id DESC");
 $result->execute();
 $rowcount123 = $result->rowcount();
 ?>
-<html>
-<head>
-	<!-- js -->
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
 
-<title>
-Dispense
-</title>
-		<link href="vendors/uniform.default.css" rel="stylesheet" media="screen">
-  <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-   
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-	<!-- combosearch box-->
-
-	  <script src="vendors/jquery-1.7.2.min.js"></script>
-    <script src="vendors/bootstrap.js"></script>
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-</head>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double) microtime() * 1000000);
-	$i = 0;
-	$pass = '';
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode = 'INV-' . createRandomPassword();
-?>
-<body>
 <?php include 'navfixed.php';?>
 	<?php
 $position = $_SESSION['SESS_LAST_NAME'];
@@ -79,7 +29,8 @@ if ($position == 'cashier') {
 if ($position == 'admin' || 'cashier') {
 	?>
 
-<?php }?>
+<?php }
+?>
 <div class="container">
 			<i class="icon-money"></i> Sales
 			<ul class="breadcrumb">
@@ -203,20 +154,7 @@ echo $row['discount'];
 			<th>  </th>
 			<td> sub-Total</td>
 			<?php
-			function formatMoney($number, $fractional = false) {
-	if ($fractional) {
-		$number = sprintf('%.2f', $number);
-	}
-	while (true) {
-		$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-		if ($replaced != $number) {
-			$number = $replaced;
-		} else {
-			break;
-		}
-	}
-	return $number;
-}
+		
 $sdsd = $_GET['invoice'];
 $result = $db->prepare("SELECT sum(amount),sum(profit) FROM sales_order WHERE invoice= :a");
 $result->bindParam(':a', $sdsd);
@@ -247,5 +185,5 @@ for ($i = 0; $row = $result->fetch(); $i++) {
 </div>
 </div>
 </body>
-<?php include 'footer.php';?>
+<?php include('../main/footer.php');?>
 </html>

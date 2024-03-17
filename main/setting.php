@@ -1,60 +1,13 @@
 <?php
-	require_once('auth.php');
-	include '../connect.php';
-?><!DOCTYPE html>
-<html>
-<head>
-<title>
-settings
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
+ini_set("display_errors", "On");
+require_once('auth.php');
+include('../connect.php');
+$title='settings';
+include('../main/navfixed.php');
 
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-   
-   <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
 ?>
-</head>
-<body>
-<?php include('navfixed.php');?>
-	
 
-        <div class="container">
-
-	
+        <div class="container">	
 			
 			<font style=" font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;"><center><?php
 $result = $db->prepare("SELECT pharmacy_name  FROM pharmacy_details");

@@ -1,108 +1,24 @@
 <?php
+ini_set("display_errors", "On");
 require_once('auth.php');
 include('../connect.php');
+$title='record purchase';
 include('../main/navfixed.php');
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<!-- js -->			
-<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="../main/lib/jquery.js" type="text/javascript"></script>
-<script src="../main/src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : '../main/src/loading.gif',
-      closeImage   : '../main/src/closelabel.png'
-    })
-  })
-</script>
-<title>
-purchases
-</title>
-<link href="../main/vendors/uniform.default.css" rel="stylesheet" media="screen">
-<link href="../main/css/bootstrap.css" rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-
-<link rel="stylesheet" href="../main/css/font-awesome.min.css">
-<style type="text/css">
-body {
-padding-top: 60px;
-padding-bottom: 40px;
-}
-.sidebar-nav {
-padding: 9px 0;
-}
-</style>
-<link href="../main/css/bootstrap-responsive.css" rel="stylesheet">
-
-<!-- combosearch box-->	
-
-<script src="../main/vendors/jquery-1.7.2.min.js"></script>
-<script src="../main/vendors/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css" href="../main/tcal.css" />
-<script type="text/javascript" src="../main/tcal.js"></script>
 
 
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-
-</head>
-<?php
-function createRandomPassword() {
-$chars = "003232303232023232023456789";
-srand((double)microtime()*1000000);
-$i = 0;
-$pass = '' ;
-while ($i <= 7) {
-
-$num = rand() % 33;
-
-$tmp = substr($chars, $num, 1);
-
-$pass = $pass . $tmp;
-
-$i++;
-
-}
-return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body style="text-transform:capitalize;">
-
-<?php
-$position=$_SESSION['SESS_LAST_NAME'];
-if($position=='cashier') {
-?>
-<a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>">Cash</a>
-
-<a href="../index.php">Logout</a>
-<?php
-}
-if($position=='admin' || 'cashier') {
-?>
-
-
-
-<?php } ?>				
-</div><!--/.well -->
-</div><!--/span-->
-
-<div class="container" ><div class="contentheader">
+<div class="container" >
 <i class="icon-money"></i> purchases
-</div>
+
 <ul class="breadcrumb">
 <a href="../main/index.php"><li>Dashboard</li></a> /
 <li class="active">purchases</li>
 </ul>
 <div style="margin-top: -19px; margin-bottom: 21px;">
-<a  href="../main/index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a><?php 
-
+<a  href="../main/index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a>
+</div>
+<?php 
 $result = $db->prepare("SELECT * FROM products where qty < level ORDER BY product_id DESC");
 $result->execute();
 $rowcount123 = $result->rowcount();

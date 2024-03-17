@@ -1,28 +1,12 @@
 <?php
+ini_set("display_errors", "On");
 require_once('../main/auth.php');
 include('../connect.php');
+$title='stock take';
 include('../main/navfixed.php');
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Take</title>
-    <!-- CSS -->
-    <link href="../main/src/facebox.css" rel="stylesheet" type="text/css">
-    <link href="../main/vendors/uniform.default.css" rel="stylesheet" media="screen">
-    <link href="../main/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-    <link rel="stylesheet" href="../main/css/font-awesome.min.css">
-    <link href="../main/css/bootstrap-responsive.css" rel="stylesheet">
-    <!-- JavaScript -->
-    <script src="../main/lib/jquery.js" type="text/javascript"></script>
-    <script src="../main/src/facebox.js" type="text/javascript"></script>
-    <script src="../main/vendors/bootstrap.js"></script>
-    <script src="../main/tcal.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../main/tcal.css" />
-</head>
 <style>
     /* Center the loading bar */
     .loading-container {
@@ -54,8 +38,7 @@ include('../main/navfixed.php');
         100% { width: 100%; }
     }
 </style>
-<body>
-    <?php include("../main/navfixed.php"); ?>
+
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

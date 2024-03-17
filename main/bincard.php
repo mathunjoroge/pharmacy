@@ -1,81 +1,12 @@
 <?php
-require_once('auth.php');
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
 include('../connect.php');
+$title='see product movement';
 include('../main/navfixed.php');
-function formatMoney($number, $fractional=false) {
-if ($fractional) {
-$number = sprintf('%.2f', $number);
-}
-while (true) {
-$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-if ($replaced != $number) {
-	$number = $replaced;
-} else {
-	break;
-}
-}
-return $number;
-}
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<!-- js -->			
-<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="../main/lib/jquery.js" type="text/javascript"></script>
-<script src="../main/src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : '../main/src/loading.gif',
-      closeImage   : '../main/src/closelabel.png'
-    })
-  })
-</script>
-<title>
-product movement
-</title>
-<link href="../main/vendors/uniform.default.css" rel="stylesheet" media="screen">
-<link href="../main/css/bootstrap.css" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-
-<link rel="stylesheet" href="../main/css/font-awesome.min.css">
-
-<link href="../main/css/bootstrap-responsive.css" rel="stylesheet">
-
-<!-- combosearch box-->	
-
-<script src="../main/vendors/jquery-1.7.2.min.js"></script>
-<script src="../main/vendors/bootstrap.js"></script>
-<link rel="stylesheet" type="text/css" href="../main/tcal.css" />
-<script type="text/javascript" src="../main/tcal.js"></script>
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-
-</head>
-<?php
-function createRandomPassword() {
-$chars = "003232303232023232023456789";
-srand((double)microtime()*1000000);
-$i = 0;
-$pass = '' ;
-while ($i <= 7) {
-
-$num = rand() % 33;
-
-$tmp = substr($chars, $num, 1);
-
-$pass = $pass . $tmp;
-
-$i++;
-
-}
-return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body style="text-transform:capitalize;">
 
 <div class="container">
 <i class="icon-money"></i> product report
@@ -110,13 +41,13 @@ $i++){
 
 ?>
 </select>
-<strong>From : <input type="text" name="d1" class="tcal" autocomplete="off" /> To: <input type="text"  name="d2" class="tcal" autocomplete="off" />
+<strong> <input type="text" name="d1" class="tcal" placeholder="from" required autocomplete="off" />  <input type="text" placeholder="to" name="d2" class="tcal" autocomplete="off" required />
 <Button type="submit" class="btn btn-info" style="width: 123px; height:35px; margin-top:-5px;" /><i class="icon-plus-sign icon-large" ></i>submit</button>
 </form>
 <?php
 if (isset($_GET['product_id'])) {
-	$d1=$_GET['d1'];
-	$d2=$_GET['d2'];
+	$d1=date(('Y-m-d'),strtotime($_GET['d1']));
+	$d2=date(('Y-m-d'),strtotime($_GET['d2']));
 ?>
 <div id="printableArea">
 <table class="table table-bordered" id="resultTable" data-responsive="table">
