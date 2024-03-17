@@ -1,6 +1,7 @@
 <?php
 ini_set("display_errors", "On");
 ?>
+ <link rel="icon" type="image/ico" href="../main/ico/favicon.ico">
 <body style="text-transform:capitalize;">
 <meta name="viewport" content="width=device-width, initial-scale=1">
  <div class="navbar navbar-inverse navbar-fixed-top">
@@ -15,7 +16,7 @@ ini_set("display_errors", "On");
           <div class="nav-collapse collapse">          
             <ul class="nav pull-right"></a><li></li>
 			<li><a><i class="icon-user icon-large"></i> Welcome:<strong> <?php echo $_SESSION['SESS_FIRST_NAME'];?></strong></a>
-      <body style="background-image: url(../main/images/background.jpg);">							
+      <body style="background-image: url(../main/images/double-bubble-outline.png);">							
 
 				</a></li>
               <li><a href="../index.php"><font color="red"><i class="icon-off icon-large"></i></font> Log Out</a></li>

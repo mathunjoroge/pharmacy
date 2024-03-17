@@ -12,7 +12,7 @@
           <div class="nav-collapse collapse">
           
             <ul class="nav pull-right"></a><li></li>
-<body style="background-image: url(images/background.jpg);">							
+ <body style="background-image: url(../main/images/double-bubble-outline.png);">						
 
 				</a></li>
               
