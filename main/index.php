@@ -29,7 +29,7 @@ $finalcode = 'INV-' . createRandomPassword();
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-    <script src="lib/jquery.js" type="text/javascript"></script>
+  
     <script src="src/facebox.js" type="text/javascript"></script>
     <script type="text/javascript">
         jQuery(document).ready(function($) {

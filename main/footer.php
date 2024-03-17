@@ -1,4 +1,15 @@
-	<link href="../main/vendors/chosen.min.css" rel="stylesheet" media="screen">
+	<div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
+<div align="center" style="bottom:10%;"> <?php echo "&copy;";?><?php function auto_copyright($year = 'auto'){ ?>
+   <?php if(intval($year) == 'auto'){ $year = date('Y'); } ?>
+   <?php if(intval($year) == date('Y')){ echo intval($year); } ?>
+   <?php if(intval($year) < date('Y')){ echo intval($year) . ' - ' . date('Y'); } ?>
+  
+   
+<?php } ?>
+<b>M&C</b>
+<?php auto_copyright('2014'); ?> All Rights Reserved
+</div>
+<link href="../main/vendors/chosen.min.css" rel="stylesheet" media="screen">
         <script src="../main/vendors/chosen.jquery.min.js"></script>
         <script src="../main/vendors/bootstrap-datepicker.js"></script>
         <script>
@@ -29,14 +40,5 @@
 <script src="../main/js/bootstrap.js" type="text/javascript"></script>
 
 <script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/jquery.dataTables.js"></script>
-<script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/DT_bootstrap.js"></script><div><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p></div>
-<div align="center" style="bottom:10%;"> <?php echo "&copy;";?><?php function auto_copyright($year = 'auto'){ ?>
-   <?php if(intval($year) == 'auto'){ $year = date('Y'); } ?>
-   <?php if(intval($year) == date('Y')){ echo intval($year); } ?>
-   <?php if(intval($year) < date('Y')){ echo intval($year) . ' - ' . date('Y'); } ?>
-  
-   
-<?php } ?>
-<b>M&C</b>
-<?php auto_copyright('2014'); ?> All Rights Reserved
-</div>
+<script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/DT_bootstrap.js"></script>
+
