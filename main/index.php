@@ -1,4 +1,4 @@
- <?php $title="home";
+<?php $title="home";
  include('navfixed.php'); ?>
     <div class="container">       
         <font style="font:bold 44px 'Aleo'; text-shadow:1px 1px 25px #000; color:green;">
