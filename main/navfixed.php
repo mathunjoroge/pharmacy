@@ -19,9 +19,6 @@ if (!function_exists('generateRandomPassword')) {
 }
 
 $password = generateRandomPassword(); // Call the function
-
-
-
 if (!function_exists('formatMoney')) {
     function formatMoney($number, $fractional = false) {
         if ($fractional) {
@@ -39,21 +36,12 @@ if (!function_exists('formatMoney')) {
     }
 }
 
-
-// Example usage of formatMoney function
-
-
-
-
-// If 'invoice' is not set in $_GET, $finalcode remains unchanged
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <title> <?php echo isset($title) ? $title : 'Title Not Defined'; ?></title>
-   <!-- js -->          
+   <title> <?php echo isset($title) ? $title : 'Title Not Defined'; ?></title>       
 <link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
 <script src="../main/lib/jquery.js" type="text/javascript"></script>
 <script src="../main/src/facebox.js" type="text/javascript"></script>
@@ -69,22 +57,14 @@ if (!function_exists('formatMoney')) {
 <link href="../main/css/bootstrap.css" rel="stylesheet">
  <link href="../main/vendors/chosen.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-
 <link rel="stylesheet" href="../main/css/font-awesome.min.css">
-
 <link href="../main/css/bootstrap-responsive.css" rel="stylesheet">
-
 <!-- combosearch box--> 
-
 <script src="../main/vendors/jquery-1.7.2.min.js"></script>
 <script src="../main/vendors/bootstrap.js"></script>
 <link rel="stylesheet" type="text/css" href="../main/tcal.css" />
 <script type="text/javascript" src="../main/tcal.js"></script>
-
-
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-
     <style>
         #cards {
             display: flex;
@@ -111,20 +91,49 @@ if (!function_exists('formatMoney')) {
         .card a {
             color: inherit;
         }
+        
+
     </style>
+    <style>
+  .navbar-toggle .icon-bar {
+    background-color: black; /* Set the color of the icon bars */
+  }
+  .navbar-toggle {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggle {
+    display: block !important;
+  }
+  .nav-collapse {
+    display: none;
+  }
+  .nav-collapse.collapsed {
+    display: block;
+  }
+}
+</style>
+
+
 </head>
-<body style="text-transform:capitalize;background-image: url(../main/images/double-bubble-outline.png);">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner" id="nav">
-            <div class="container-fluid">
-                <a class="brand" href="#"><img src="../main/ico/logo.PNG" style="height:35px;">
-                    <div class="nav-collapse collapse">
-                        <ul class="nav pull-right">
-                            <li><a><i class="icon-user icon-large"></i> Welcome:<strong> <?php echo $_SESSION['SESS_FIRST_NAME'];?></strong></a></li>
-                            <li><a href="../index.php"><font color="red"><i class="icon-off icon-large"></i></font> Log Out</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </a>
-            </div>
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner" id="nav">
+    <div class="container-fluid">
+      <a class="brand" href="#">
+        <img src="../main/ico/logo.PNG" style="height:35px;">
+      </a>
+      <button type="button" class="navbar-toggle pull-right" id="navToggle">
+        <span class="icon-bar">&nbsp;</span>
+         <span class="icon-bar">&nbsp;</span>
+          <span class="icon-bar">&nbsp;</span>                      
+      </button>
+      <div class="nav-collapse collapse" id="navCollapse">
+        <ul class="nav pull-right">
+          <li><a><i class="icon-user icon-large"></i> Welcome:<strong> <?php echo $_SESSION['SESS_FIRST_NAME'];?></strong></a></li>
+          <li><a href="../index.php"><font color="red"><i class="icon-off icon-large"></i></font> Log Out</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
     </div>
+  </div>
+</div>

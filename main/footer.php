@@ -23,23 +23,25 @@
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("navToggle").addEventListener("click", function() {
+      console.log("Toggle button clicked!"); // Add this line for debugging
+      var navCollapse = document.getElementById("navCollapse");
+      if (navCollapse.classList.contains("show")) {
+        navCollapse.classList.remove("show");
+        console.log("NavCollapse is now hidden."); // Add this line for debugging
+      } else {
+        navCollapse.classList.add("show");
+        console.log("NavCollapse is now visible."); // Add this line for debugging
+      }
+    });
+  });
+</script>
 
         <script src="../main/vendors/chosen.jquery.min.js"></script>
         <script src="../main/vendors/bootstrap-datepicker.js"></script>
-    <script src="../main/js/bootstrap-transition.js"></script>    
-    <script src="../main/js/bootstrap-alert.js"></script>
-    <script src="../main/js/bootstrap-modal.js"></script>
-    <script src="../main/js/bootstrap-dropdown.js"></script>
-    <script src="../main/js/bootstrap-scrollspy.js"></script>
-    <script src="../main/js/bootstrap-tab.js"></script>
-    <script src="../main/js/bootstrap-tooltip.js"></script>
-    <script src="../main/js/bootstrap-popover.js"></script>
-    <script src="../main/js/bootstrap-button.js"></script>
-    <script src="../main/js/bootstrap-collapse.js"></script>
-    <script src="../main/js/bootstrap-carousel.js"></script>
-    <script src="../main/js/bootstrap-typeahead.js"></script>
+    
 <script src="../main/js/bootstrap.js" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/jquery.dataTables.js"></script>
 <script type="text/javascript" charset="utf-8" language="javascript" src="../main/js/DT_bootstrap.js"></script>
-
-
