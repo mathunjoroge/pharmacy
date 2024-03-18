@@ -128,5 +128,3 @@ if (!function_exists('formatMoney')) {
             </div>
         </div>
     </div>
-</body>
-</html>

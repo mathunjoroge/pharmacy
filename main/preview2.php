@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<?php require_once ('auth.php');?>
-<title>
-Preview Invoice
-</title>
- <link href="../main/css/bootstrap.css" rel="stylesheet">
+<?php
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title='receipt';
+include('../main/navfixed.php');
 
-    <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="../main/css/font-awesome.min.css">
-    <style type="text/css">
-    
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="../main/lib/jquery.js" type="text/javascript"></script>
-<script src="../main/src/facebox.js" type="text/javascript"></script>
+?>
 <script language="javascript">
 function Clickheretoprint()
 { 
@@ -38,7 +23,6 @@ function Clickheretoprint()
 </script>
 <?php
 $invoice=$_GET['invoice'];
-include('../connect.php');
 $result = $db->prepare("SELECT * FROM pending WHERE invoice= :userid");
 $result->bindParam(':userid', $invoice);
 $result->execute();
@@ -57,31 +41,9 @@ $amount=$cash-$am;
 }
 }
 ?>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
 
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
 <body style="text-transform:capitalize;">
-	<div class="container">
-
-<?php include('../main/navfixed.php');?>		
+	<div class="container">	
 <a href="purchaseslist.php?"><button class="btn btn-primary"><i class="icon-arrow-left"></i> back</button></a>
 
 
@@ -218,20 +180,7 @@ for ($i = 0; ($row = $result->fetch()); $i++) {
 					</strong></td>
 					<td colspan="2"><strong style="font-size: 15px; color: #222222;">
 					<?php
-					function formatMoney($number, $fractional=false) {
-						if ($fractional) {
-							$number = sprintf('%.2f', $number);
-						}
-						while (true) {
-							$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-							if ($replaced != $number) {
-								$number = $replaced;
-							} else {
-								break;
-							}
-						}
-						return $number;
-					}
+				
 					if($pt=='credit'){
 					echo $cash;
 					}

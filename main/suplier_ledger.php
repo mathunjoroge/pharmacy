@@ -1,55 +1,18 @@
-<?php 
-require_once('auth.php');
+<?php
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title='list supplier ledger';
+include('../main/navfixed.php');
+
 ?>
-<html>
-<head>
+<div class="container">
+      <div class="container">
+			
 
-
-<title>
-supplier Ledger
-</title>
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-<script src="argiepolicarpio.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/application.js" type="text/javascript" charset="utf-8"></script>
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
-</head>
-<body style="text-transform:capitalize;">
-
-<?php include('navfixed.php');?>
-	
-	
-	
 	<div class="container">
-      
-	<div class="contentheader">
+		<p>&nbsp;</p>
+
 			<i class="icon-list"></i> Supplier Legder
 			</div>
 			<ul class="breadcrumb">

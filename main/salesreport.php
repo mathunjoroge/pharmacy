@@ -1,86 +1,15 @@
 <?php
-require_once('auth.php');
-include '../connect.php';
-$date1=date('Y-m-d',strtotime($_GET['d1']));
-$date2=date('Y-m-d',strtotime($_GET['d2']));
-$d1=date('Y-m-d',strtotime($_GET['d1']));
-$d2=date('Y-m-d',strtotime($_GET['d2']));
-
-function formatMoney($number, $fractional=false) {
-if ($fractional) {
-$number = sprintf('%.2f', $number);
-}
-while (true) {
-$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-if ($replaced != $number) {
-$number = $replaced;
-} else {
-break;
-}
-}
-return $number;
-}
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title = 'sales report';
+include('../main/navfixed.php');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 
-<head>
-<title>
-Sales Report
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-   
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="tcal.css" />
-<script type="text/javascript" src="tcal.js"></script>
-<script language="javascript">
-function Clickheretoprint()
-{ 
-  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-      disp_setting+="scrollbars=yes,width=700, height=400, top=25"; 
-  var content_vlue = document.getElementById("content").innerHTML; 
-  
-  var docprint=window.open("","",disp_setting); 
-   docprint.document.open(); 
-   docprint.document.write('</head><h4 align="center">Winsor Pharmacy</h4><body align="center" onLoad="self.print()" style="width: 700px; font-size:11px; font-family:arial; font-weight:normal;">');          
-   docprint.document.write(content_vlue); 
-   docprint.document.close(); 
-   docprint.focus(); 
-}
-</script>
-</head>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body>
-<?php include('navfixed.php');?>
 <div class="container">
-      
-	
-	<div class="contentheader">
+    <div class="container">
+        <div class="container">
+            <p>&nbsp;</p>
 			<i class="icon-bar-chart"></i> Sales Report
 			</div>
 			<ul class="breadcrumb">
@@ -91,7 +20,20 @@ $finalcode='INV-'.createRandomPassword();
 <div style="margin-top: -19px; margin-bottom: 21px;">
 <a  href="index.php"><button class="btn btn-success btn-large" style="float: none;"><i class="icon icon-home icon-large"></i> Back</button></a>
 </div>
+<?php $date1=date('Y-m-d',strtotime($_GET['d1']));
+$date2=date('Y-m-d',strtotime($_GET['d2']));
+$d1=date('Y-m-d',strtotime($_GET['d1']));
+$d2=date('Y-m-d',strtotime($_GET['d2'])); ?>
+<?php
+if(isset($_GET['d1']) && isset($_GET['d2'])) {
+    $d1 = date('Y-m-d', strtotime($_GET['d1']));
+    $d2 = date('Y-m-d', strtotime($_GET['d2']));
 
+    // Now you can use $d1 and $d2 safely
+} else {
+    echo "Error: One or both variables are not set.";
+}
+?>
 <form action="salesreport.php" method="get">
 <center><strong>From : <input type="text"  name="d1" class="tcal" autocomplete="off" /> To: <input type="text"  name="d2" class="tcal"autocomplete="off" />
 <button class="btn btn-success" style="width: 123px; height:35px; margin-top:-8px;margin-left:8px;" type="submit"><i class="icon icon-search icon-large"></i> submit</button>

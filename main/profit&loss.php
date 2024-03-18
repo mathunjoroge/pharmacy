@@ -1,38 +1,29 @@
 <?php
-require_once('auth.php');
-include '../connect.php';
-$date1 = date('Y-m-d', strtotime($_GET['d1']));
-$date2 = date('Y-m-d', strtotime($_GET['d2']));
-$d1 = date('Y-m-d', strtotime($_GET['d1']));
-$d2 = date('Y-m-d', strtotime($_GET['d2']));
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title = 'trading profit and loss account';
+include('../main/navfixed.php');
+?>
+<?php 
+$date1=date('Y-m-d',strtotime($_GET['d1']));
+$date2=date('Y-m-d',strtotime($_GET['d2']));
+$d1=date('Y-m-d',strtotime($_GET['d1']));
+$d2=date('Y-m-d',strtotime($_GET['d2'])); ?>
+<?php
+if(isset($_GET['d1']) && isset($_GET['d2'])) {
+    $d1 = date('Y-m-d', strtotime($_GET['d1']));
+    $d2 = date('Y-m-d', strtotime($_GET['d2']));
 
-function formatMoney($number, $fractional = false) {
-    if ($fractional) {
-        $number = sprintf('%.2f', $number);
-    }
-    while (true) {
-        $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-        if ($replaced != $number) {
-            $number = $replaced;
-        } else {
-            break;
-        }
-    }
-    return $number;
+    // Now you can use $d1 and $d2 safely
+} else {
+    echo "Error: One or both variables are not set.";
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-    <title>Sales Report</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="tcal.css" />
-    <script type="text/javascript" src="tcal.js"></script>
+<div class="container">
+    <div class="container">
+        <div class="container">
+            <p>&nbsp;</p>
     <script language="javascript">
         function Clickheretoprint() {
             var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
@@ -47,12 +38,7 @@ function formatMoney($number, $fractional = false) {
             docprint.focus();
         }
     </script>
-</head>
 
-<body>
-    <?php include('navfixed.php'); ?>
-    <div class="container">
-        <div class="contentheader">
             <i class="icon-bar-chart"></i> Sales Report
         </div>
         <ul class="breadcrumb">

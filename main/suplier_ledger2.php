@@ -1,57 +1,18 @@
-<?php 
-require_once('auth.php');
-$supplier=$_GET['cname'];
-function formatMoney($number, $fractional=false) {
-					if ($fractional) {
-						$number = sprintf('%.2f', $number);
-					}
-					while (true) {
-						$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-						if ($replaced != $number) {
-							$number = $replaced;
-						} else {
-							break;
-						}
-					}
-					return $number;
-				}
-?><html><head>
-<title>
-supplier Ledger
-</title>
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
+<?php
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title='list of purchases';
+include('../main/navfixed.php');
 
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+?>
+<div class="container">
+      <div class="container">
+			
 
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-<script src="argiepolicarpio.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/application.js" type="text/javascript" charset="utf-8"></script>
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-
-</head>
-<body style="text-transform:capitalize;">
-
-<?php include('navfixed.php');?>
-	
-	
-	
 	<div class="container">
-      
-	<div class="contentheader">
+		<p>&nbsp;</p>
+
 			<i class="icon-list"></i> Supplier Legder
 			</div>
 			<ul class="breadcrumb">
@@ -121,7 +82,7 @@ echo 'Contact  '.$rowas['contact_person'].'<br>';
 				for($i=0; $row = $result->fetch(); $i++){
 			?>
 			<tr class="record">
-			<td><?php echo $row['date2']; ?></td>
+			<td><?php echo $row['date']; ?></td>
 			<td><?php echo $row['amount2']; ?></td>
 			
 			</tr>
@@ -135,7 +96,7 @@ echo 'Contact  '.$rowas['contact_person'].'<br>';
 				 
 			<?php
 								
-				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE name LIKE '%".$supplier."%' ORDER BY `date2`");
+				$results = $db->prepare("SELECT sum(amount2) FROM payments WHERE name LIKE '%".$supplier."%' ORDER BY `date`");
 				
 				$results->execute();
 				for($i=0; $rows = $results->fetch(); $i++){

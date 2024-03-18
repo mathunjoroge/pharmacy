@@ -1,62 +1,38 @@
 <?php
-require_once "auth.php";
-include "../connect.php";
-function formatMoney($number, $fractional = false)
-{
-if ($fractional) {
-$number = sprintf("%.2f", $number);
-}
-while (true) {
-$replaced = preg_replace("/(-?\d+)(\d\d\d)/", '$1,$2', $number);
-if ($replaced != $number) {
-$number = $replaced;
-} else {
-break;
-}
-}
-return $number;
-}
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title='purchases and payments';
+include('../main/navfixed.php');
 
-$d1 = isset($_GET['d1']) ? date("d/m/Y", strtotime($_GET['d1'])) : '';
-$d2 = isset($_GET['d2']) ? date("d/m/Y", strtotime($_GET['d2'])) : '';
-$term = isset($_GET["term"]) ? $_GET["term"] : '';
 ?>
-<html>
-<head>
-<title>
-Purchases And Payments
-</title>
-<link href="css/bootstrap.css" rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-
-<link rel="stylesheet" href="css/font-awesome.min.css">
-
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="tcal.css" />
-<script type="text/javascript" src="tcal.js"></script>
-<script language="javascript">
-function Clickheretoprint()
-{ 
-var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-disp_setting+="scrollbars=yes,width=700, height=400, left=100, top=25"; 
-var content_vlue = document.getElementById("content").innerHTML; 
-
-var docprint=window.open("","",disp_setting); 
-docprint.document.open(); 
-docprint.document.write('</head><body onLoad="self.print()" style="font-weight:normal;">');          
-docprint.document.write(content_vlue); 
-docprint.document.close(); 
-docprint.focus(); 
+<?php
+// Check if $_GET['d1'] is set and not empty
+if(isset($_GET['d1']) && !empty($_GET['d1'])) {
+    $d1 = date('Y-m-d', strtotime($_GET['d1']));
+} else {
+    // Handle error: d1 not set or empty
+    // You can choose to set a default value, redirect, or display an error message
+    $d1 = null; // Setting a default value to null in this example
 }
-</script>
-</head>
-<body style="text-transform:capitalize;" >
-<?php include "navfixed.php"; ?>		
-<div class="container" >
-<div class="contentheader" >
+
+// Check if $_GET['d2'] is set and not empty
+if(isset($_GET['d2']) && !empty($_GET['d2'])) {
+    $d2 = date('Y-m-d', strtotime($_GET['d2']));
+} else {
+    // Handle error: d2 not set or empty
+    // You can choose to set a default value, redirect, or display an error message
+    $d2 = null; // Setting a default value to null in this example
+}
+?>
+
+<div class="container">
+      <div class="container">
+			
+
+	<div class="container">
+		<p>&nbsp;</p>
+
 <i class="icon-bar-chart"></i> purchases and payments
 </div>
 <div class="container" ><ul class="breadcrumb">
@@ -64,8 +40,8 @@ docprint.focus();
 <li class="active">purchases and payments Report</li>
 </ul>
 <form class="ui-widget" action="suppstatements.php" method="get">
-select supplier:
-<select name="term" required><option></option>
+
+<select name="term" placeholder="select supplier" required><option></option>
 <?php
 $result = $db->prepare("SELECT * FROM supliers");
 
@@ -88,7 +64,6 @@ for ($i = 0; ($row = $result->fetch()); $i++) {
 <?php
 if(isset($_GET['term'])) {
 $supplier_id = $_GET['term'];
-
 // Query to get the total credit purchases made from the selected supplier
 $query = $db->prepare("SELECT SUM(amount) AS total_purchases FROM purchases2 WHERE name = :supplier_id AND type = 'Credit'");
 $query->bindParam(':supplier_id', $supplier_id);
@@ -287,7 +262,7 @@ echo 0;
 </thead>
 <?php
 $results = $db->prepare(
-"SELECT amount2,date2 FROM payments WHERE name=:supplier AND date2>=:a AND date2<=:b"
+"SELECT amount2,date FROM payments WHERE name=:supplier AND date>=:a AND date<=:b"
 );
 $results->bindParam(":supplier", $term);
 $results->bindParam(":a", $d1);
@@ -295,7 +270,7 @@ $results->bindParam(":b", $d2);
 $results->execute();
 for ($i = 0; ($rows = $results->fetch()); $i++) { ?>
 <tr>
-<td><?php echo $rows['date2'];  ?></td>
+<td><?php echo $rows['date'];  ?></td>
 
 <td style="text-align: right;"><?php echo $rows['amount2'];  ?></td>
 </tr>	
@@ -306,7 +281,7 @@ for ($i = 0; ($rows = $results->fetch()); $i++) { ?>
 
 <?php
 $results = $db->prepare(
-"SELECT sum(amount2) FROM payments WHERE name=:supplier AND date2>=:a AND date2<=:b"
+"SELECT sum(amount2) FROM payments WHERE name=:supplier AND date>=:a AND date<=:b"
 );
 $results->bindParam(":supplier", $term);
 $results->bindParam(":a", $d1);

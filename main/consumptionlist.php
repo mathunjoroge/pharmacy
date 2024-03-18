@@ -1,87 +1,67 @@
 <?php
-require_once('auth.php');
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
 include('../connect.php');
-				$d1=$_GET['d1'];
-				$d2=$_GET['d2'];
+$title = 'consumption report';
+include('../main/navfixed.php');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php 
+$date1=date('Y-m-d',strtotime($_GET['d1']));
+$date2=date('Y-m-d',strtotime($_GET['d2']));
+$d1=date('Y-m-d',strtotime($_GET['d1']));
+$d2=date('Y-m-d',strtotime($_GET['d2'])); ?>
+<?php
+if(isset($_GET['d1']) && isset($_GET['d2'])) {
+    $d1 = date('Y-m-d', strtotime($_GET['d1']));
+    $d2 = date('Y-m-d', strtotime($_GET['d2']));
 
-<head>
-<title>
-consumptiont Report
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="tcal.css" />
-<script type="text/javascript" src="tcal.js"></script>
-<script language="javascript">
-function Clickheretoprint()
-{ 
-  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-      disp_setting+="scrollbars=yes,width=700, height=400, left=100, top=25"; 
-  var content_vlue = document.getElementById("content").innerHTML; 
-  
-  var docprint=window.open("","",disp_setting); 
-   docprint.document.open(); 
-   docprint.document.write('</head><h4 align="center"><?php
-$result = $db->prepare("SELECT *  FROM pharmacy_details");
-$result->execute();
-for ($i = 0; ($row = $result->fetch()); $i++) {
-    $slogan = $row["slogan"]; ?>
-<div id="logo" class="container"><div class="container"><?php echo $row["pharmacy_name"]; ?> </div><div class="container"><?php echo $row["location"]; ?> </div><div class="container"><?php echo $row["contact"]; ?> </div><div class="container"><?php echo $row["email"]; ?> </div><?php
+    // Now you can use $d1 and $d2 safely
+} else {
+    echo "Error: One or both variables are not set.";
 }
 ?>
-</h4><body onLoad="self.print()" style="width: 700px; font-size:11px; font-family:arial; font-weight:normal;">');          
-   docprint.document.write(content_vlue); 
-   docprint.document.close(); 
-   docprint.focus(); 
+<div class="container">
+    <div class="container">
+        <div class="container">
+            <p>&nbsp;</p>
+<script language="javascript">
+function Clickheretoprint() {
+  try {
+    var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
+    disp_setting+="scrollbars=yes,width=700, height=400, left=100, top=25"; 
+    
+    // Get the inner HTML content of the div with id "content"
+    var content_value = document.getElementById("content").innerHTML; 
+
+    var docprint = window.open("", "", disp_setting); 
+    docprint.document.open(); 
+    docprint.document.write('<html><head><title>Print</title></head><body>');
+    docprint.document.write('<h4 align="center"><?php
+      $result = $db->prepare("SELECT *  FROM pharmacy_details");
+      $result->execute();
+      for ($i = 0; ($row = $result->fetch()); $i++) {
+        $slogan = $row["slogan"]; ?>
+        <div id="logo" class="container">
+          <div class="container"><?php echo $row["pharmacy_name"]; ?> </div>
+          <div class="container"><?php echo $row["location"]; ?> </div>
+          <div class="container"><?php echo $row["contact"]; ?> </div>
+          <div class="container"><?php echo $row["email"]; ?> </div>
+        </div><?php
+      }
+    ?>
+    </h4>');          
+    docprint.document.write(content_value); // Print the content of the div
+    docprint.document.write('</body></html>'); 
+    docprint.document.close(); 
+    docprint.focus(); 
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred. Please try again later.');
+  }
 }
 </script>
-</head>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
 
-		$num = rand() % 33;
 
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body>
-<?php include('navfixed.php');?>
-<div class="container">
-      
-	
-	<div class="contentheader">
 			<i class="icon-bar-chart"></i> consumption report
 			</div>
 			<ul class="breadcrumb">

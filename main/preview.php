@@ -1,79 +1,13 @@
 <?php
 ini_set("display_errors", "On");
-require_once "auth.php";
-include "../connect.php";
-function formatMoney($number, $fractional = false)
-{
-    if ($fractional) {
-        $number = sprintf("%.2f", $number);
-    }
-    while (true) {
-        $replaced = preg_replace("/(-?\d+)(\d\d\d)/", '$1,$2', $number);
-        if ($replaced != $number) {
-            $number = $replaced;
-        } else {
-            break;
-        }
-    }
-    return $number;
-}
+require_once('../main/auth.php');
+include('../connect.php');
+$title='receipt';
+include('../main/navfixed.php');
+
 ?>
-<?php
-function createRandomPassword() {
-$chars = "003232303232023232023456789";
-srand((double)microtime()*1000000);
-$i = 0;
-$pass = '' ;
-while ($i <= 7) {
-
-$num = rand() % 33;
-
-$tmp = substr($chars, $num, 1);
-
-$pass = $pass . $tmp;
-
-$i++;
-
-}
-return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<title>
-Preview receipt
-</title>
-<style type="text/css">
-    @media print {
-#content{
-    border: 1px solid white;
-    height: auto !important;
-   
-    page-break-before: always !important;
-    page-break-after: auto;
- }
-
-.paper-size {
-    width: 76mm !important;
-}}
-</style>
-<link href="css/bootstrap.css" rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-
-<link rel="stylesheet" href="css/font-awesome.min.css">
-
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<head>
-
-</head>
-
-<body>
-<?php include "navfixed.php";  ?>
-<div class="container"><a href="sales.php?id=cash&invoice=<?php echo $finalcode; ?>"><button class="btn btn-primary">new sale</button></a></div>
+<div class="container"><p>&nbsp;</p>
+    <a href="sales.php?id=cash&invoice=<?php echo $finalcode; ?>"><button class="btn btn-success">new sale</button></a></div>
 <div  id="content">
 <div class="container">
 <center>
