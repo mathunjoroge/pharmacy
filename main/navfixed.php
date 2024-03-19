@@ -113,9 +113,7 @@ if (!function_exists('formatMoney')) {
         }
    @media screen and (max-width: 980px) {
   #right {
-    background-color: black;
-    color: #4CAF50;
-    font-size: 2em;
+      font-size: 2em;
   }
  .card {
     width: calc(90% - 40px); /* Set the width to occupy full width with spacing */
