@@ -1,5 +1,6 @@
-<body>
-<?php include('navfixed.php');?>
+<?php 
+$title="products";
+include('navfixed.php');?>
 
         <div class="container">
 

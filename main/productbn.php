@@ -1,82 +1,14 @@
-<?php
-require_once('auth.php');
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php 
+$title="products by batch numbers";
+include('navfixed.php');?>
 
-<head>
-<title>
-products by batch numbers
-</title>
+        <div class="container">
 
- <link href="css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-
-
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<!--sa poip up-->
-<script src="jeffartagame.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/application.js" type="text/javascript" charset="utf-8"></script>
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox({
-      loadingImage : 'src/loading.gif',
-      closeImage   : 'src/closelabel.png'
-    })
-  })
-</script>
-</head>
-<?php
-function createRandomPassword() {
-    $chars = "003232303232023232023456789";
-    srand((double)microtime()*1000000);
-    $i = 0;
-    $pass = '' ;
-    while ($i <= 7) {
-
-        $num = rand() % 33;
-
-        $tmp = substr($chars, $num, 1);
-
-        $pass = $pass . $tmp;
-
-        $i++;
-
-    }
-    return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body>
-<?php include('navfixed.php');?>
-<div class="container">
-      <div class="container">
-    
-            
-
-    <div class="contentheader">
-
-            <i class="icon-group"></i> products
+            <i class="icon-group"></i> products by batch
             </div>
             <div class="container">
             <p>&nbsp;</p> 
-            </div>
+          
             
             
             
@@ -93,7 +25,7 @@ $finalcode='INV-'.createRandomPassword();
             <p>&nbsp;</p> 
             </div>
 
-<input type="text" name="filter" style="padding:15px;" id="filter" placeholder="Search product..." autocomplete="off" />
+<input type="text" name="filter"  id="filter" placeholder="Search product..." autocomplete="off" />
 
 <table class="table table-bordered" id="resultTable" data-responsive="table" style="text-align: left;">
     <thead>
