@@ -4,10 +4,7 @@ require_once('auth.php');
 include('../connect.php');
 $title='record purchase';
 include('../main/navfixed.php');
-
 ?>
-
-
 <div class="container" >
 <i class="icon-money"></i> purchases
 

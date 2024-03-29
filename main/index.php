@@ -60,7 +60,7 @@
             </a>
         </div>
         <div class="card">
-            <a href="#">
+            <a href="../wholesale/sales.php?id=cash&invoice=<?php echo $finalcode ?>">
                 <i class="icon-shopping-cart icon-2x"></i><br>
                 Wholesale
             </a>

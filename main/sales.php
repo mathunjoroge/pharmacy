@@ -107,9 +107,9 @@ document.getElementById('disc').max =discountmax;
 
 			<?php
 $id = $_GET['invoice'];
-include '../connect.php';
-$result = $db->prepare("SELECT transaction_id,gen_name,product_code,sales_order.price AS price,discount,amount,sales_order.qty AS qty FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE invoice= :userid AND amount!= ''");
-$result->bindParam(':userid', $id);
+
+$result = $db->prepare("SELECT transaction_id,gen_name,product_code,sales_order.price AS price,discount,amount,sales_order.qty AS qty FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE invoice= :invoice AND amount!= ''");
+$result->bindParam(':invoice', $id);
 $result->execute();
 for ($i = 1; $row = $result->fetch(); $i++) {
 	?>

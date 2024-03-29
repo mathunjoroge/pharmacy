@@ -1,6 +1,6 @@
-<?php
-	$Today = date('m/d/20y',time());
-	$new = date('m/d/20y', strtotime($Today));
+<?php ini_set("display_errors", "On");
+	
+	$new = date('Y-m-d');
 	
 	?>
 	<?php

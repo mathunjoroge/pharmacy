@@ -1,8 +1,8 @@
 <?php
 ini_set("display_errors", "On");
-require_once('../main/auth.php');
+require_once('auth.php');
 include('../connect.php');
-$title = 'record wholesale sale';
+$title = 'record purchase';
 include('../main/navfixed.php');
 
 // Fetch low running products
@@ -26,7 +26,7 @@ $rowcount123 = $result->rowCount();
     </div>
     <div style="text-align:center;">
         <font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';"><?php echo $rowcount123; ?></font>
-        <a rel="facebox" href="../main/level.php">
+        <a rel="facebox" href="level.php">
             <button class="btn btn-primary">Low running products</button>
         </a>
     </div>
@@ -135,7 +135,7 @@ $rowcount123 = $result->rowCount();
                 foreach ($totals_stm as $rowas) {
                     $total = $rowas['SUM(amount)'];
                     $profit = $rowas['SUM(profit)'];
-                  
+                    echo formatMoney($total, true);
                 ?>
                     <td><?= formatMoney($total, true); ?></td>
                 <?php } ?>

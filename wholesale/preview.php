@@ -1,26 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php require_once ('auth.php');?>
-<title>
-Preview Invoice
-</title>
- <link href="css/bootstrap.css" rel="stylesheet">
+<?php
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title = 'preview invoice';
+include('../main/navfixed.php'); ?>
 
-    <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-    <style type="text/css">
-    
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-    </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="lib/jquery.js" type="text/javascript"></script>
-<script src="src/facebox.js" type="text/javascript"></script>
+
+   
 <script language="javascript">
 function Clickheretoprint()
 { 
@@ -38,7 +27,6 @@ function Clickheretoprint()
 </script>
 <?php
 $invoice=$_GET['invoice'];
-include('../connect.php');
 $result = $db->prepare("SELECT * FROM sales WHERE invoice_number= :userid");
 $result->bindParam(':userid', $invoice);
 $result->execute();
@@ -60,66 +48,8 @@ $amount=$cash-$am;
 }
 }
 ?>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
 
 
-
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>
-<body style="text-transform:capitalize;">
-
-<?php include('navfixed.php');?>
-	
 	<div class="container-fluid">
       <div class="row-fluid">
 
@@ -128,19 +58,29 @@ window.onload=startclock;
 			</li>
 				
 				</ul>           
-          </div><!--/.well -->
-        </div><!--/span-->
+         
 		
 	<div class="span10">
 	<a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-success" id="back"><i class="icon-arrow-left"></i> New sale</button></a>
 
 <div class="content" id="content">
-<div style="margin: 0 auto; padding: 20px; width: 900px; font-weight: normal;">
-	<div style="width: 100%; height: 190px;" >
-	<div style="width: 900px; float: left;">
-	<center><div style="font:bold 25px 'Aleo';">Sales Receipt</div>
-	M&C Pharmacy
-	</center>
+<div class="container" align="center">
+	<div>
+	<div >
+		<?php
+$result = $db->prepare("SELECT *  FROM pharmacy_details");
+$result->execute();
+for ($i = 0; ($row = $result->fetch()); $i++) {
+    $slogan = $row["slogan"]; ?>
+<p><?php echo $row["pharmacy_name"]; ?> </p>
+<p><?php echo $row["location"]; ?> </p>
+<p><?php echo $row["contact"]; ?> </p>
+<p><?php echo $row["email"]; ?> </p>
+<p>sales invoice</p>
+
+<?php
+}
+?>
 	<div>
 	<?php
 	$resulta = $db->prepare("SELECT * FROM customer WHERE customer_name= :a");
@@ -189,7 +129,7 @@ window.onload=startclock;
 			
 				<?php
 					$id=$_GET['invoice'];
-					$result = $db->prepare("SELECT * FROM sales_order WHERE invoice= :userid");
+					$result = $db->prepare("SELECT transaction_id, gen_name, product_code, sales_order.price AS price, discount, amount, sales_order.qty AS qty FROM sales_order JOIN products ON products.product_id=sales_order.product WHERE invoice= :userid");
 					$result->bindParam(':userid', $id);
 					$result->execute();
 					for($i=0; $row = $result->fetch(); $i++){
@@ -267,20 +207,7 @@ window.onload=startclock;
 					</strong></td>
 					<td colspan="2"><strong style="font-size: 15px; color: #222222;">
 					<?php
-					function formatMoney($number, $fractional=false) {
-						if ($fractional) {
-							$number = sprintf('%.2f', $number);
-						}
-						while (true) {
-							$replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-							if ($replaced != $number) {
-								$number = $replaced;
-							} else {
-								break;
-							}
-						}
-						return $number;
-					}
+					
 					if($pt=='credit'){
 					echo $cash;
 					}
@@ -300,9 +227,10 @@ window.onload=startclock;
 	
 	</div>
 	</div>
+		</div>
 <div class="pull-right" style="margin-right:100px;">
 		<a href="javascript:Clickheretoprint()" style="font-size:20px;"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
-		<script type="text/javascript"> document.getElementById('back').click(); </script>
+	
 		</div>	
 </div>
 </div>

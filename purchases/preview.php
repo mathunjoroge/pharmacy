@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<?php require_once ('auth.php');?>
-<title>
-Preview Invoice
-</title>
- <link href="../main/css/bootstrap.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="../main/css/DT_bootstrap.css">
-  
-  <link rel="stylesheet" href="../main/css/font-awesome.min.css">
-   
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
-<link href="../main/src/facebox.css" media="screen" rel="stylesheet" type="text/css" />
-<script src="../main/lib/jquery.js" type="text/javascript"></script>
-<script src="../main/src/facebox.js" type="text/javascript"></script>
+<?php
+ini_set("display_errors", "On");
+require_once('../main/auth.php');
+include('../connect.php');
+$title = 'preview invoice';
+include('../main/navfixed.php'); ?>
 <script language="javascript">
 function Clickheretoprint()
 { 
@@ -32,7 +20,6 @@ function Clickheretoprint()
 </script>
 <?php
 $invoice=$_GET['invoice'];
-include('../connect.php');
 $result = $db->prepare("SELECT * FROM pending WHERE invoice= :userid");
 $result->bindParam(':userid', $invoice);
 $result->execute();
@@ -51,29 +38,6 @@ $amount=$cash-$am;
 }
 }
 ?>
-<?php
-function createRandomPassword() {
-	$chars = "003232303232023232023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-	while ($i <= 7) {
-
-		$num = rand() % 33;
-
-		$tmp = substr($chars, $num, 1);
-
-		$pass = $pass . $tmp;
-
-		$i++;
-
-	}
-	return $pass;
-}
-$finalcode='INV-'.createRandomPassword();
-?>
-<body style="text-transform:capitalize;">
-<?php include('../main/navfixed.php');?>
 <div class="container">		
 <a href="sales.php?id=cash&invoice=<?php echo $finalcode ?>"><button class="btn btn-primary"><i class="icon-arrow-left"></i> record another purchase</button></a>&nbsp;&nbsp;	<a href="../main/index.php"><button class="btn btn-primary"><i class="icon-arrow-left"></i> Go to sales</button></a>
 </div>
