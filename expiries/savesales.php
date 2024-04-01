@@ -15,6 +15,10 @@ $columnExists = $q->rowCount() > 0;
 
 // If the column exists, modify the table, otherwise, proceed to dropping unnecessary columns
 if ($columnExists) {
+    //add primary index
+   $sql = " ALTER TABLE `expiriestt` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`)";
+    $q = $db->prepare($sql);
+    $q->execute();
     // Alter the table to allow NULL values for 'type' column
     $sql = "ALTER TABLE `expiriestt` MODIFY COLUMN `type` VARCHAR(255) DEFAULT NULL";
     $q = $db->prepare($sql);
