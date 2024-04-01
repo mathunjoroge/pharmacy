@@ -29,13 +29,14 @@ if ($columnExists) {
     $sql = "ALTER TABLE `expiriestt` DROP COLUMN `cashtendered`";
     $q = $db->prepare($sql);
     $q->execute();
-} else {
-    // Drop unnecessary columns
     $sql = "ALTER TABLE `expiriestt`
       DROP COLUMN `name`,
       DROP COLUMN `balance`";
     $q = $db->prepare($sql);
     $q->execute();
+} else {
+    // Drop unnecessary columns
+    
 }
 
 
