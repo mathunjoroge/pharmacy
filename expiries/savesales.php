@@ -7,23 +7,37 @@ $b = $_POST['cashier'];
 $c = $_POST['date'];
 $d = $_POST['amount'];
 $e = -$_POST['amount'];
-// Alter the table to allow NULL values for 'type' column
-$sql = "ALTER TABLE `expiriestt` MODIFY COLUMN `type` VARCHAR(255) DEFAULT NULL";
+// Check if the column 'cashtendered' exists in the table
+$sql = "SHOW COLUMNS FROM `expiriestt` LIKE 'cashtendered'";
 $q = $db->prepare($sql);
 $q->execute();
+$columnExists = $q->rowCount() > 0;
 
-// Drop the 'type' column
-$sql = "ALTER TABLE `expiriestt` DROP COLUMN `type`";
-$q = $db->prepare($sql);
-$q->execute();
+// If the column exists, modify the table, otherwise, proceed to dropping unnecessary columns
+if ($columnExists) {
+    // Alter the table to allow NULL values for 'type' column
+    $sql = "ALTER TABLE `expiriestt` MODIFY COLUMN `type` VARCHAR(255) DEFAULT NULL";
+    $q = $db->prepare($sql);
+    $q->execute();
+    
+    // Drop the 'type' column
+    $sql = "ALTER TABLE `expiriestt` DROP COLUMN `type`";
+    $q = $db->prepare($sql);
+    $q->execute();
+    
+    // Drop the 'cashtendered' column
+    $sql = "ALTER TABLE `expiriestt` DROP COLUMN `cashtendered`";
+    $q = $db->prepare($sql);
+    $q->execute();
+} else {
+    // Drop unnecessary columns
+    $sql = "ALTER TABLE `expiriestt`
+      DROP COLUMN `name`,
+      DROP COLUMN `balance`";
+    $q = $db->prepare($sql);
+    $q->execute();
+}
 
-// Drop unnecessary columns
-$sql = "ALTER TABLE `expiriestt`
-  DROP COLUMN `cashtendered`,
-  DROP COLUMN `name`,
-  DROP COLUMN `balance`";
-$q = $db->prepare($sql);
-$q->execute();
 
 
 $sql = "INSERT INTO expiriestt (invoice_number,cashier,date,amount,profit) VALUES (:a,:b,:c,:d,:e)";
