@@ -19,6 +19,10 @@ if ($columnExists) {
    $sql = " ALTER TABLE `expiriestt` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`)";
     $q = $db->prepare($sql);
     $q->execute();
+    //change date 
+      $sql = "ALTER TABLE `expiriestt` CHANGE `date` `date` DATE NOT NULL";
+    $q = $db->prepare($sql);
+    $q->execute();
     // Alter the table to allow NULL values for 'type' column
     $sql = "ALTER TABLE `expiriestt` MODIFY COLUMN `type` VARCHAR(255) DEFAULT NULL";
     $q = $db->prepare($sql);
