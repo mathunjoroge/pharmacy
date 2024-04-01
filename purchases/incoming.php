@@ -42,7 +42,7 @@ $q->execute(array(':date'=>$date,':pid'=>$pid,':bn'=>$bn,':edate'=>$edate,':c'=>
 $sql = "INSERT INTO pending (invoice,product,qty,price,amount,date,batch) VALUES (:a,:b,:c,:f,:mn,:k,:batch)";
 $q = $db->prepare($sql);
 $q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':f'=>$asasa,':mn'=>$mn,':k'=>$date,':batch'=>$bn));
-header("location: sales.php?id=$w&invoice=$a");
+header("location: purchases.php?id=$w&invoice=$a");
 
 
 ?>

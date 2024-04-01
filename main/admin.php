@@ -25,7 +25,7 @@ include('navfixed.php');?>
 <a href="user.php"><font ><i class="icon-group icon-2x"></i></font><br> users</a>
 </div>
 <div class="card">
-<a href="../expiries/sales.php?id=cash&invoice=<?php echo $finalcode ?>"><i class="icon-bar-chart icon-2x"></i><br> expiries</a>
+<a href="../expiries/expiries.php?id=cash&invoice=<?php echo $finalcode ?>"><i class="icon-bar-chart icon-2x"></i><br> expiries</a>
 </div>
 <div class="card">
 <a href="expiriesreport.php?d1=0&d2=0"><i class="icon-bar-chart icon-2x"></i><br> expiries report</a>

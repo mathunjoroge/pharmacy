@@ -115,9 +115,19 @@ if (!function_exists('formatMoney')) {
   }
 }
 </style>
+<style type="text/css">
+    body {
+    /* Set the background image */
+    background-image: url('../main/images/double-bubble-outline.png');
 
-
+    /* Set background image properties */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the background image */
+}
+</style>
 </head>
+<body>
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner" id="nav">
     <div class="container-fluid">

@@ -1,7 +1,7 @@
 <html>
 <?php
-	$Today = date('m/d/20y',time());
-	$new = date('m/d/20y', strtotime($Today));
+	
+	$new = date('Y-m-d');
 	
 	?>
 <head>

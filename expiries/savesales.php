@@ -1,34 +1,34 @@
 <?php
 session_start();
+ini_set("display_errors", "On");
 include('../connect.php');
 $a = $_POST['invoice'];
 $b = $_POST['cashier'];
 $c = $_POST['date'];
-$d = $_POST['ptype'];
-$e = $_POST['amount'];
-$z = $_POST['profit'];
-$cname = $_POST['cname'];
-$h = $_POST['opdno'];
-$age = $_POST['age'];
-$sex = $_POST['sex'];
-if($d=='credit') {
-$f = $_POST['due'];
-$sql = "INSERT INTO expiriestt (invoice_number,cashier,date,type,amount,profit,due_date,) VALUES (:a,:b,:c,:d,:e,:z,:f)";
+$d = $_POST['amount'];
+$e = -$_POST['amount'];
+// Alter the table to allow NULL values for 'type' column
+$sql = "ALTER TABLE `expiriestt` MODIFY COLUMN `type` VARCHAR(255) DEFAULT NULL";
 $q = $db->prepare($sql);
-$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':d'=>$d,':e'=>$e,':z'=>$z,':f'=>$f));
-header("location: preview.php?invoice=$a");
-exit();
-}
-if($d=='cash') {
-$f = $_POST['cash'];
-$sql = "INSERT INTO expiriestt (invoice_number,cashier,date,type,amount,profit,cashtendered) VALUES (:a,:b,:c,:d,:e,:z,:f)";
+$q->execute();
+
+// Drop the 'type' column
+$sql = "ALTER TABLE `expiriestt` DROP COLUMN `type`";
 $q = $db->prepare($sql);
-$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':d'=>$d,':e'=>$e,':z'=>$z,':f'=>$f));
-header("location: preview.php?invoice=$a");
-exit();
-}
-// query
+$q->execute();
+
+// Drop unnecessary columns
+$sql = "ALTER TABLE `expiriestt`
+  DROP COLUMN `cashtendered`,
+  DROP COLUMN `name`,
+  DROP COLUMN `balance`";
+$q = $db->prepare($sql);
+$q->execute();
 
 
+$sql = "INSERT INTO expiriestt (invoice_number,cashier,date,amount,profit) VALUES (:a,:b,:c,:d,:e)";
+$q = $db->prepare($sql);
+$q->execute(array(':a'=>$a,':b'=>$b,':c'=>$c,':d'=>$d,':e'=>$e));
+header("location: preview.php?invoice=$a");
 
 ?>
