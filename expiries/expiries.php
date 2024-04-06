@@ -31,7 +31,6 @@ $rowcount123 = $result->rowcount();
 
 <form action="incoming.php" method="post" >
 
-
 <input type="hidden" name="pt" value="<?php echo $_GET['id']; ?>" />
 <input type="hidden" name="invoice" value="<?php echo $_GET['invoice']; ?>" />
       <select autofocus name="product" style="width:430px;font-size:0.8em;" class="chzn-select" id="mySelect">
@@ -41,7 +40,7 @@ $result = $db->prepare("SELECT* FROM products RIGHT OUTER JOIN batch ON batch.pr
 $result->execute();
 ?>
     <?php for ($i = 0; $row = $result->fetch(); $i++): ?>
-    <option value="<?php echo $row['product_id']; ?>" data-qty="<?=$row['quantity'];?>" data-pr="<?=$row['o_price']*$row['markup'];?>" data-exp="<?=$row['expirydate'];?>" data-batch="<?=$row['batch_no'];?>" data-maxdisc="<?=$row['maxdiscre'];?>" data-maxdiscpc="<?=$row['maxdiscpr'];?>">
+    <option value="<?php echo $row['product_id']; ?>" data-qty="<?=$row['quantity'];?>" data-pr="<?=round($row['o_price']*$row['markup']);?>" data-exp="<?=$row['expirydate'];?>" data-batch="<?=$row['batch_no'];?>" data-maxdisc="<?=$row['maxdiscre'];?>" data-maxdiscpc="<?=$row['maxdiscpr'];?>">
         <?=$row['gen_name'];?> -
             <?=$row['product_code'];?>
     </option>
@@ -74,7 +73,7 @@ document.getElementById('disc').max =discountmax;
 <input  name="exp" placeholder="expiry" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" readonly />
 <input type="number" name="pr" min="1" placeholder="price" id="fpr" step=".00001" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;">
 
-<input type="number" name="pc" max="" placeholder="disc" id="disc" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" />
+<input type="hidden" name="pc" max="" placeholder="disc" id="disc" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" />
 <input type="hidden" name="date" value="<?php echo date('m/d/y'); ?>" />
 
 <Button type="submit" class="btn btn-info" style="width: 123px; height:35px; margin-top:-5px;" /><i class="icon-plus-sign icon-large" ></i> Add</button>

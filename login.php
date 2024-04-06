@@ -22,7 +22,7 @@ $hashed_password = md5(md5($password));
 
 try {
     // Prepare and execute the query
-    $stmt = $db->prepare("SELECT * FROM user WHERE username = :username AND password = :password");
+    $stmt = $db->prepare("SELECT * FROM user WHERE BINARY username = :username AND password = :password");
     $stmt->bindParam(':username', $login);
     $stmt->bindParam(':password', $hashed_password);
     $stmt->execute();

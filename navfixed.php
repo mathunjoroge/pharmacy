@@ -1,5 +1,10 @@
-<body style="text-transform:capitalize;">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<body style="background-image: url('main/images/double-bubble-outline.png');
+
+    /* Set background image properties */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the background image */">
  <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner" id="nav">
         <div class="container-fluid">
@@ -12,7 +17,7 @@
           <div class="nav-collapse collapse">
           
             <ul class="nav pull-right"></a><li></li>
- <body style="background-image: url(../main/images/double-bubble-outline.png);">						
+					
 
 				</a></li>
               
@@ -21,35 +26,4 @@
         </div>
       </div>
     </div>
-     <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>
+     
