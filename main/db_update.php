@@ -1,111 +1,100 @@
--- Update sales_order table
-UPDATE sales_order
-SET date = CONCAT(date, '/');
+<?php
+ini_set("display_errors", "On");
+session_start();
+include('../connect.php');
 
-UPDATE sales_order
-SET date = CONCAT(SUBSTRING(date, 6), SUBSTRING(date, 1, 5));
+try {
+    // Table creation
+    $tableName = 'sales_order_bonus';
+    $sql = "CREATE TABLE IF NOT EXISTS $tableName (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        invoice INT,
+        product VARCHAR(50),
+        quantity INT,
+        amount DECIMAL(10, 2),
+        price DECIMAL(10, 2),
+        profit DECIMAL(10, 2),
+        date DATE,
+        discount DECIMAL(5, 2),
+        batch VARCHAR(20),
+        balance DECIMAL(10, 2),
+        has_bonus BOOLEAN
+    )";
 
-UPDATE sales_order
-SET date = SUBSTRING(date, 2);
-UPDATE sales_order
-SET date = REPLACE(date, '/', '-');
+    $db->exec($sql);
+    echo "Table $tableName creation status: Success<br>";
 
--- Change column date to DATE type in sales_order table
-ALTER TABLE `sales_order` CHANGE `date` `date` DATE NOT NULL;
+    // Table import from file
+    $tableName = 'promotion';
+    $tableExistsQuery = "SHOW TABLES LIKE ?";
+    $stmt = $db->prepare($tableExistsQuery);
+    $stmt->execute([$tableName]);
 
-ALTER TABLE `sales_order` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
+    if ($stmt->rowCount() == 0) {
+        $sqlFilePath = 'promotion.sql';
+        $sqlContent = file_get_contents($sqlFilePath);
+        
+        if ($sqlContent === false) {
+            throw new Exception("Failed to read SQL file");
+        }
 
+        if ($db->exec($sqlContent) === false) {
+            throw new Exception("Failed to execute SQL queries from file");
+        }
+        
+        echo "Table $tableName import status: Success<br>";
+    } else {
+        echo "Table $tableName already exists<br>";
+    }
 
--- Update purchases table
-UPDATE purchases
-SET date = CONCAT(date, '/');
-UPDATE purchases
-SET date = CONCAT(SUBSTRING(date, 6), SUBSTRING(date, 1, 5));
-UPDATE purchases
-SET date = SUBSTRING(date, 2);
+    // Column addition
+    $tableName = 'products';
+    $stmt = $db->prepare("SHOW TABLES LIKE :tableName");
+    $stmt->execute([':tableName' => $tableName]);
 
-UPDATE purchases
-SET date = REPLACE(date, '/', '-');
+    if ($stmt->rowCount() > 0) {
+        $columns = $db->query("SHOW COLUMNS FROM $tableName")->fetchAll(PDO::FETCH_COLUMN);
 
--- Change column date to DATE type in purchases table
-ALTER TABLE `purchases` CHANGE `date` `date` DATE NOT NULL;
-ALTER TABLE `purchases` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
+        if (!in_array('promotionqty', $columns)) {
+            $db->exec("ALTER TABLE $tableName ADD promotionqty INT DEFAULT 0");
+            echo "Column promotionqty added successfully to $tableName.<br>";
+        }
 
--- Update purchases2 table
-UPDATE purchases2
-SET date = CONCAT(date, '/');
-UPDATE purchases2
-SET date = CONCAT(SUBSTRING(date, 6), SUBSTRING(date, 1, 5));
-UPDATE purchases2
-SET date = SUBSTRING(date, 2);
-UPDATE purchases2
-SET date = REPLACE(date, '/', '-');
--- Change column date to DATE type in purchases2 table
-ALTER TABLE `purchases2` CHANGE `date` `date` DATE NOT NULL;
-ALTER TABLE `purchases2` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
+        if (!in_array('promotion_number', $columns)) {
+            $db->exec("ALTER TABLE $tableName ADD promotion_number INT DEFAULT 0");
+            echo "Column promotion_number added successfully to $tableName.<br>";
+        }
+    } else {
+        echo "Table $tableName does not exist.<br>";
+    }
 
+    // Check and alter product_id column
+    $tableName = "products";
+    $showTableQuery = "SHOW CREATE TABLE $tableName";
+    $stmt = $db->prepare($showTableQuery);
+    $stmt->execute();
+    $tableInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Extract the table creation query
+    $tableCreationQuery = $tableInfo['Create Table'];
 
--- Update payments table
+    // Check if the product_id is already a primary key and auto-incrementing
+    if (strpos($tableCreationQuery, 'product_id INT AUTO_INCREMENT PRIMARY KEY') === false) {
+        // Step 2: Alter the table to make product_id primary key auto-increment
+        $alterTableQuery = "ALTER TABLE $tableName MODIFY COLUMN product_id INT AUTO_INCREMENT PRIMARY KEY";
 
-UPDATE payments
-SET date2 = CONCAT(date2, '/');
-
-UPDATE payments
-SET date2 = CONCAT(SUBSTRING(date2, 6), SUBSTRING(date2, 1, 5)); -- Corrected from date2 to date
-
-UPDATE payments
-SET date2 = SUBSTRING(date2, 2);
-
-UPDATE payments
-SET date2 = REPLACE(date2, '/', '-');
-ALTER TABLE `payments` CHANGE `date2` `date2` VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
-ALTER TABLE `payments` CHANGE `date2` `date` DATE NOT NULL;
-ALTER TABLE `payments` CHANGE `paymentid` `paymentid` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`paymentid`);
-
--- Update salaries table
-UPDATE salaries
-SET date = CONCAT(date, '/');
-
-UPDATE salaries
-SET date = CONCAT(SUBSTRING(date, 6), SUBSTRING(date, 1, 5));
-UPDATE salaries
-SET date = SUBSTRING(date, 2);
-UPDATE salaries
-SET date = REPLACE(date, '/', '-');
--- Change column date to DATE type and make id AUTO_INCREMENT in salaries table
-ALTER TABLE `salaries` CHANGE `date` `date` DATE NOT NULL;
-ALTER TABLE `salaries` CHANGE `id` `id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
-
--- Add PRIMARY KEY to expenses table
-ALTER TABLE `expenses` CHANGE `id` `id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
--- Change transaction_id to AUTO_INCREMENT in collection table
-
-ALTER TABLE `collection` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
-
--- Update sales table
-ALTER TABLE `sales` CHANGE `date` `date` VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
-UPDATE sales
-SET date = CONCAT(date, '/');
-UPDATE sales
-SET date = CONCAT(SUBSTRING(date, 6), SUBSTRING(date, 1, 5));
-
-UPDATE sales
-SET date = SUBSTRING(date, 2);
-
-UPDATE sales
-SET date = REPLACE(date, '/', '-');
--- Change column date to DATE type in sales table
-ALTER TABLE `sales` CHANGE `date` `date` DATE NOT NULL;
-ALTER TABLE `sales` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
-
--- Update pending table
-UPDATE pending
-SET date = DATE_FORMAT(STR_TO_DATE(date, '%d/%m/%Y'), '%Y-%m-%d');
-UPDATE pending
-SET date = REPLACE(date, '/', '-');
-
--- Change column date to DATE type in pending table
-ALTER TABLE `pending` CHANGE `date` `date` DATE NOT NULL;
-
-ALTER TABLE `pending` CHANGE `transaction_id` `transaction_id` INT(10) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`transaction_id`);
+        // Execute the alter table query
+        $stmt = $db->prepare($alterTableQuery);
+        $stmt->execute();
+        echo "Table altered successfully. product_id is now a primary key and auto-incrementing.";
+    } else {
+        echo "product_id is already a primary key and auto-incrementing.";
+    }
+} catch (PDOException $e) {
+    echo "PDOException: " . $e->getMessage();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+} finally {
+    $db = null;
+}
+?>
