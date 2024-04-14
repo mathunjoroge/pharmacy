@@ -46,6 +46,28 @@ try {
     } else {
         echo "Table $tableName already exists<br>";
     }
+    // Table import returns
+    $tableName = 'returns';
+    $tableExistsQuery = "SHOW TABLES LIKE ?";
+    $stmt = $db->prepare($tableExistsQuery);
+    $stmt->execute([$tableName]);
+
+    if ($stmt->rowCount() == 0) {
+        $sqlFilePath = 'returns.sql';
+        $sqlContent = file_get_contents($sqlFilePath);
+        
+        if ($sqlContent === false) {
+            throw new Exception("Failed to read SQL file");
+        }
+
+        if ($db->exec($sqlContent) === false) {
+            throw new Exception("Failed to execute SQL queries from file");
+        }
+        
+        echo "Table $tableName import status: returns table Success<br>";
+    } else {
+        echo "Table $tableName already exists<br>";
+    }
 
     // Column addition
     $tableName = 'products';
