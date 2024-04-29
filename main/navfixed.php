@@ -66,12 +66,13 @@ if (!function_exists('formatMoney')) {
 <script type="text/javascript" src="../main/tcal.js"></script>
 <link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
     <style>
-        #cards {
-            display: flex;
-            justify-content: left;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+#cards {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 20px;
+
+}
 
         .card {
             width: 300px;
@@ -91,8 +92,9 @@ if (!function_exists('formatMoney')) {
         .card a {
             color: inherit;
         }
-        
-
+      #cards {
+   
+  }
     </style>
     <style>
   .navbar-toggle .icon-bar {

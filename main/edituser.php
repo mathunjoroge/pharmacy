@@ -1,30 +1,33 @@
 <?php
-	include('../connect.php');
-	$id=$_GET['id'];
-	$result = $db->prepare("SELECT * FROM user WHERE id= :userid");
-	$result->bindParam(':userid', $id);
-	$result->execute();
-	for($i=0; $row = $result->fetch(); $i++){
+    include('../connect.php');
+    $id = $_GET['id'];
+    $result = $db->prepare("SELECT * FROM user WHERE id= :id");
+    $result->bindParam(':id', $id);
+    $result->execute();
+    for ($i = 0; $row = $result->fetch(); $i++) {
 ?>
-<link href="../style.css" media="screen" rel="stylesheet" type="text/css" />
 <form action="saveedituser.php" method="post">
-<center><h4><i class="icon-edit icon-large"></i> Edit user</h4></center>
-<hr>
+    <h4 style="text-align: center;">Edit User</h4>
+    <hr>
 
-<div id="ac">
-<input type="hidden" name="memi" value="<?php echo $id; ?>" />
-<span>username: </span><input type="text" style="width:265px; height:30px;" name="a" value="<?php echo $row['username']; ?>" /><br>
-<span>password: </span><input type="text" style="width:265px; height:30px;" name="b" value="<?php echo $row['password']; ?>" /><br>
-<span>Contact : </span><input type="text" style="width:265px; height:30px;" name="c" value="<?php echo $row['contact']; ?>" /><br>
-<span> </span><input type="hidden" style="width:265px; height:30px;" name="d" value="<?php echo $row['name']; ?>" /><br>
-<span>position : </span><select name="e"><option></option><option>pharmacist</option><option>cashier</option><option>admin</option></select><br>
-<span>Id Number </span><input type="text" style="width:265px; height:30px;" name="f" value="<?php echo $row['idno']; ?>" /><br>
-<div style="float:right; margin-right:10px;">
+    <input type="hidden" name="memi" value="<?php echo $id; ?>" />
+    <label>Username: </label><input type="text" name="a" value="<?php echo $row['username']; ?>" required/><br>
+    <label>Password: </label><input type="password" name="b" value="" /><br>
+    <label>Contact: </label><input type="text" name="c" value="<?php echo $row['contact']; ?>" required/><br>
+    <input type="hidden" name="d" value="<?php echo $row['name']; ?>" required/><br>
+    <label>Position: </label>
+    <select name="e">
+        <option></option>
+        <option>Pharmacist</option>
+        <option>Cashier</option>
+        <option>Admin</option>
+    </select><br>
+    <label>ID Number: </label><input type="text" name="f" value="<?php echo $row['idno']; ?>" /><br>
 
-<button class="btn btn-success btn-block btn-large" style="width:267px;"><i class="icon icon-save icon-large"></i> Save Changes</button>
-</div>
-</div>
+    <button class="btn btn-success" style="display: block; margin: 0 auto; width: 100%;"><i>Save Changes</i></button>
 </form>
+
+
 <?php
-}
+    }
 ?>

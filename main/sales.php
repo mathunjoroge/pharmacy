@@ -39,7 +39,7 @@ if ($position == 'admin' || 'cashier') {
 			</ul>
 			</div>
 <div class="container">
-<a  href="index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a><a  href="returns.php"><button class="btn btn-success btn-large" style="float: none;" >sales return</button></a>&nbsp;<?php
+<a  href="index.php"><button class="btn btn-success btn-large" style="float: none;" ><i class="icon icon-circle-arrow-left icon-large"></i> Back</button></a><a  href="returns.php?invoice=<?php echo $finalcode ?>"><button class="btn btn-success btn-large" style="float: none;" >sales return</button></a>&nbsp;<?php
 if ($_SESSION['SESS_LAST_NAME'] ='admin') {
 	# code...
 
