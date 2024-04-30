@@ -10,4 +10,4 @@ admin who has all the functions loaded pharmacist who can do sales, record purch
 
 customers can make payments using cash, Mobile money or bank.
 
-username: admin, password: 12345678. to install, place the folder in htdocs and navigate to 127.0.0.1/pharmacy_improved and database and tables will be created
+username: admin, password: 1234
